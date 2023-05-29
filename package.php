@@ -48,8 +48,8 @@
             <div class="image"><img src="image/package1.jpg" alt="">
         </div>
         <div class="content">
-            <h3>Adventure & Tour</h3>
-            <p>Lorem ipsum dolor sit amet consectetur.</p>
+            <h3>Lotshe</h3>
+            <p>The Himalaya</p>
             <a href="book.php" class="btn">Book Now</a>
         
         </div>

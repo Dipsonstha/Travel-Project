@@ -1,15 +1,15 @@
 <?php
-
-    session_start();
+session_start();
 
 $connection = mysqli_connect('localhost', 'root', '', 'book_db');
 if (isset($_POST['send'])) {
 
-    // Check if the form has already been submitted
+    // Check if the form has already been submitted in the current session
     if (isset($_SESSION['form_submitted']) && $_SESSION['form_submitted']) {
         echo 'The form has already been submitted.';
         exit();
     }
+
     // Retrieve form data
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -41,10 +41,8 @@ if (isset($_POST['send'])) {
         // Execute the query
         mysqli_query($connection, $request);
 
-
-        // Set the form submitted status in session
+        // Set the form submitted flag in session
         $_SESSION['form_submitted'] = true;
-
 
         // Redirect to the book.php page
         header('location: book.php');
@@ -54,6 +52,8 @@ if (isset($_POST['send'])) {
         echo 'Please fill in all required fields.';
     }
 } else {
+    // Clear the form submitted flag if accessing the form again
+    $_SESSION['form_submitted'] = false;
     echo 'Something went wrong. Please try again.';
 }
 
