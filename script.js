@@ -21,3 +21,12 @@ window.onscroll = () => {
     menu.classList.remove('fa-times');
     navbar.classList.remove('active');
 };
+
+document.getElementById("forgot-password-link").addEventListener("click", function(event) {
+    event.preventDefault();
+    showForgotPassword();
+  });   
+  
+  function showForgotPassword() {
+    alert("Forgot password? Please contact our support team for assistance.");
+  }

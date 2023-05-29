@@ -47,9 +47,9 @@
             <input type="submit" class="btn" value="login now">
             <input type="checkbox" id="remember">
             <label for="remember">remember me</label>
-            <p>forgot password? <a href="#">click here</a></p>
-            <p>dont have an account?<a href="#">register now</a></p>
-        </form>
+            <p class="forgot-password">Forgot password? <a href="#" id="forgot-password-link">Click here</a></p>
+            <p>dont have an account?<a href="signup.php">register now</a></p>
+        </form> 
     </div>
     <!-- Home section starts -->
     <section class="home">

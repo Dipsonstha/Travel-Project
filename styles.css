@@ -229,6 +229,7 @@ color: #666;
     cursor: pointer;
 }  
 
+
 #menu-btn{
     font-size: 2.5rem;
     cursor: pointer;
@@ -236,6 +237,55 @@ color: #666;
     display: none;
 
 }
+
+.signup-form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .signup-form-container .signup-form h3{
+    font-size: 3rem;
+    color: var(--main-color);
+    text-transform: uppercase;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.signup-form-container .signup-form .box{
+    width: 100%;
+    padding: 1rem;
+    font-size:1.7rem;
+    color: #333;
+    margin: 1rem 0;
+    border: .1rem solid rgb(0,0,0,.3);
+    text-transform: none;
+
+}
+
+.signup-form-container .signup-form .btn{
+    display: block;
+    width:100%;
+    }
+    
+  /*
+  .signup-form-container input[type="text"],
+  .signup-form-container input[type="email"],
+  .signup-form-container input[type="password"],
+  .signup-form-container input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  */
+  .signup-form-container label {
+    display: block;
+    margin-bottom: 15px;
+  }
+  
+  
 
 .home{
     padding: 0;
