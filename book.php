@@ -68,7 +68,7 @@
         <input type="text" placeholder="enter your destination" name="location">
     </div>
 
-    <div class="inputBox">
+        <div class="inputBox">
         <span>How many  :</span>
         <input type="number" placeholder="enter number of people" name="guests">
     </div>
@@ -91,7 +91,7 @@
    <section class="footer">
         
         <div class="box-container">
-           <div class="box"> 
+               <div class="box"> 
            <h3>Quick Links</h3>
     
             <a href="home.php"> <i class="fas fa-angle-right"></i>home</a>

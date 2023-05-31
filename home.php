@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
 
         <!-- Custom Css link -->
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="../css/styles.css">
         <!-- Font awsome link -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
@@ -74,27 +74,27 @@
         <div class="box-container">
 
             <div class="box">
-                <img src="icon1.png" alt="">
+                <img src="image/icon1.png" alt="">
             <h3>Adventures</h3>
             </div>
 
             <div class="box">
-                <img src="icon2.png" alt="">
+                <img src="image/icon2.png" alt="">
             <h3>Tour Guide</h3>
             </div>
 
             <div class="box">
-                <img src="icon3.png" alt="">
+                <img src="image/icon3.png" alt="">
             <h3>Trekking</h3>
             </div>
 
             <div class="box">
-                <img src="icon4.png" alt="">
+                <img src="image/icon4.png" alt="">
             <h3>Off Road</h3>
             </div>
 
             <div class="box">
-                <img src="icon5.png" alt="">
+                <img src="image/icon5.png" alt="">
             <h3>Camping</h3>
             </div>
 
@@ -219,7 +219,7 @@
 
     <!-- Custom Js Link -->
 
-    <script  src="script.js"></script>
+    <script  src="../js/script.js"></script>
 
 
     </body>

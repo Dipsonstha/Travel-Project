@@ -48,9 +48,9 @@
             <p>dont have an account?<a href="signup.php">register now</a></p>
         </form>
     </div>
-        <!-- signup form started -->
+        <!-- signup form started -->    
         <div class="signup-form-container">
-    <form class="signup-form">
+    <form action="signup_form.php" method="post" class="signup-form">
     <h3>Signup</h3>
     <input type="text" name="name" class="box" placeholder="Name" required>
       <input type="email" name="email" class="box" placeholder="Email" required>
@@ -61,7 +61,7 @@
         <input type="checkbox" id="terms" name="terms" required>
         I agree to the terms and conditions
       </label>
-      <input type="submit" class="btn" value="signup now">   
+      <input type="submit" class="btn" value="signup now" name="send">        
      </form>
 </div>
     <!-- signup form ended -->
