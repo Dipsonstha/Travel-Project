@@ -23,6 +23,7 @@ if (isset($_POST['send'])) {
     // Perform form validation
     if (!empty($name) && !empty($email) && !empty($phone) && !empty($address) && !empty($location) && !empty($guests) && !empty($arrivals) && !empty($leaving)) {
         // All required fields have a value, proceed with database insertion
+        
 
         // Escape special characters to prevent SQL injection
         $name = mysqli_real_escape_string($connection, $name);
