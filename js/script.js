@@ -1,7 +1,7 @@
 let menu = document.querySelector('#menu-btn');
 let navbar = document.querySelector('.header .navbar');
 let formBtn = document.querySelector('#login-btn');
-let loginFormContainer = document.querySelector('.login-form-container');
+let loginForm = document.querySelector('.login-form-container');
 let formClose = document.querySelector('#form-close');
 
 menu.onclick = () => {
@@ -10,11 +10,11 @@ menu.onclick = () => {
 };
 
 formBtn.addEventListener('click', () => {
-    loginFormContainer.classList.add('active');
+    loginForm.classList.add('active');
 });
 
 formClose.addEventListener('click', () => {
-    loginFormContainer.classList.remove('active');
+    loginForm.classList.remove('active');
 });
 
 window.onscroll = () => {

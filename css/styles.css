@@ -152,8 +152,16 @@ color: var(--main-color);
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-
+.login-form-container .close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    font-size: 5rem;
+    color: #fff;
+    cursor: pointer;
+  }
 .login-form-container.active {
+    top: 0;
     opacity: 1;
     visibility: visible;
 }
@@ -228,8 +236,15 @@ color: #666;
     color: #fff;
     cursor: pointer;
 }  
-
-
+.error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5rem;
+}
+.fas.fa-user {
+    font-size: 24px; /* Adjust the font size as desired */
+}
 #menu-btn{
     font-size: 2.5rem;
     cursor: pointer;
@@ -268,7 +283,23 @@ color: #666;
     display: block;
     width:100%;
     }
-    
+    .signup-form-container .signup-form select{
+      width: 100%;
+    padding: 1rem;
+    font-size:1.7rem;
+    color: #333;
+    margin: 1rem 0;
+    border: .1rem solid rgb(0,0,0,.3);
+    text-transform: none;
+    }
+    .signup-form-container .signup-form .error-msg{
+        margin: 10px 0;
+        display: block;
+        background: crimson;
+        color: #fff;
+        border-radius: 5px; 
+        font-size: 20px;
+    }
   /*
   .signup-form-container input[type="text"],
   .signup-form-container input[type="email"],
@@ -624,6 +655,10 @@ margin-top: 2rem;
 }
 
 
+.container .row .inputBox label{
+    font-size: 1.5rem;
+    color: var(--light-black);
+}
 
 
 

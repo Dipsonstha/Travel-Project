@@ -226,7 +226,7 @@ section{
 
 .header .flex .navbar a:hover{
    color:var(--main-color);
-   text-decoration: underline;
+   text-decoration: none;
 }
 
 .header .flex .icons div{
@@ -264,7 +264,9 @@ section{
    font-size: 2rem;
    margin-bottom: 1rem;
 }
-
+.fas.fa-user {
+   font-size: 24px; /* Adjust the font size as desired */
+}
 #menu-btn{
    display: none;
 }
@@ -303,7 +305,13 @@ section{
    color:var(--light-color);
    margin:1rem 0;
 }
-
+.heading-title{
+   text-align: center;
+    margin-bottom: 3rem;
+    font-size: 6rem;
+    text-transform: uppercase;
+    color: var(--black);
+}
 .add-products form{
    max-width: 70rem;
    margin: 0 auto;   
@@ -323,7 +331,15 @@ section{
 .add-products form .flex .inputBox{
    flex:1 1 25rem;
 } 
-
+.add-products form .flex .inputBox input{
+   width: 100%;
+    padding: 1.2rem 1.4rem;
+    font-size: 1.6rem;
+    color: var(--light-black);
+    text-transform: none;
+    margin-top: 1.5rem;
+    border: var(--border);
+}
 .add-products form span{
    font-size:1.7rem;
    color:var(--light-color);
@@ -342,7 +358,44 @@ section{
    height: 5.4rem;
    resize: none;
 }
+.add-products .success-message,
+.add-products .error-message {
+  text-align: center;
+   margin-top: 3rem;
+  padding: 4rem;
+  border-radius: 0.5rem;
+  font-size: 3.4rem;
+}
 
+.add-products .success-message {
+  background-color: #dff0d8;
+  color: #3c763d;
+}
+
+.add-products .error-message {
+  background-color: #f2dede;
+  color: #a94442;
+}
+.table {
+   width: 100%;
+   border-collapse: collapse;
+}
+
+.table th, .table td {
+   padding: 10px;
+   font-size: 2rem;
+   text-align: left;
+   border-bottom: 1px solid #ddd;
+}
+
+.table th {
+   background-color: #f2f2f2;
+   font-weight: bold;
+}
+
+.table tr:hover {
+   background-color: #f5f5f5;
+}
 .show-products .box-container{
    display: grid;
    grid-template-columns: repeat(auto-fit, 33rem);
@@ -350,6 +403,7 @@ section{
    justify-content: center;
    align-items: flex-start;
 }
+
 
 .show-products .box-container .box{
    background-color: var(--white);

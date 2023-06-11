@@ -24,7 +24,6 @@
         <a href="home.php">home</a>
         <a href="about.php">About</a>
         <a href="package.php">Package</a>
-        <a href="book.php">Book</a>
         </nav>
         <div id="menu-btn" class="fas fa-bars"></div>
           <div class="icons"> 
@@ -34,6 +33,20 @@
     </section>
 
 <!-- Header section Ends -->
+    <!-- login form container -->
+    <div class="login-form-container">
+    <span class="close-btn" id="form-close">&times;</span>
+        <form action="" class="login-form">
+            <h3>login</h3>
+            <input type="email" class="box" placeholder="enter your email" required >
+            <input type="password" class="box" placeholder="enter your password">
+            <input type="submit" class="btn" value="login now">
+            <input type="checkbox" id="remember">
+            <label for="remember">remember me</label>
+            <p class="forgot-password">Forgot password? <a href="#" id="forgot-password-link">Click here</a></p>
+            <p>dont have an account?<a href="signup.php">register now</a></p>
+        </form> 
+    </div>
 <div class="heading" style="background:url(image/slider1.jpg) no-repeat">
 <h1>About us</h1>
 </div>
