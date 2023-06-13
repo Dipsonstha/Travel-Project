@@ -178,7 +178,7 @@ if (isset($_POST['send'])) {
                 <div class="content">
                     <h3>Mardi</h3>
                 <p>The Himalaya</p>
-                <a href="book.php" class="btn">Book</a>
+                <a href="#" class="btn">Book</a>
                 </div>
                 </div>
 
@@ -189,7 +189,7 @@ if (isset($_POST['send'])) {
                 <div class="content">
                     <h3>Adventure & Tour</h3>
                 <p>Lorem ipsum dolor sit amet.</p>
-                <a href="book.php" class="btn">Book</a>
+                <a href="#" class="btn">Book</a>
                 </div>
             </div>
 
@@ -200,7 +200,7 @@ if (isset($_POST['send'])) {
                 <div class="content">
                     <h3>Adventure & Tour</h3>
                 <p>Lorem ipsum dolor sit amet.</p>
-                <a href="book.php" class="btn">Book</a>
+                <a href="#" class="btn">Book</a>
                 </div>
                 </div>
         </div>

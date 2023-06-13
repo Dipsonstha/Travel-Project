@@ -1,3 +1,35 @@
+<?php
+session_start();
+$error = array(); // Initialize the error array
+
+if (isset($_POST['send'])) {
+    include 'config.php';
+
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = md5($_POST['password']);
+
+    $select = "SELECT * FROM signup_form WHERE email = '$email'";
+    $result = mysqli_query($conn, $select);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_array($result);
+        if ($row['password'] == $password) {
+            if ($row['user_type'] == 'admin') {
+                $_SESSION['admin_name'] = $row['name'];
+                header('Location: dashboard.php');
+                exit;
+            } elseif ($row['user_type'] == 'user') {
+                header('Location: user_dashboard.php');
+                exit;
+            }
+        } else {
+            $error[] = 'Incorrect password!';
+        }
+    } else {
+        $error[] = 'Incorrect email or password!';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,11 +68,20 @@
     <!-- login form container -->
     <div class="login-form-container">
     <span class="close-btn" id="form-close">&times;</span>
-        <form action="" class="login-form">
+        <form class="login-form" method="POST">
             <h3>login</h3>
-            <input type="email" class="box" placeholder="enter your email" required >
-            <input type="password" class="box" placeholder="enter your password">
-            <input type="submit" class="btn" value="login now">
+            <?php
+    if (!empty($error)) {
+    echo '<div class="error-message">';
+    foreach ($error as $errorMsg) {
+        echo '<span class="error-msg">' . $errorMsg . '</span>';
+    }
+    echo '</div>';
+}
+?>
+            <input type="email" name="email" class="box" placeholder="enter your email" required >
+            <input type="password" name="password" class="box" placeholder="enter your password">
+            <input type="submit" name="send" class="btn" value="login now">
             <input type="checkbox" id="remember">
             <label for="remember">remember me</label>
             <p class="forgot-password">Forgot password? <a href="#" id="forgot-password-link">Click here</a></p>

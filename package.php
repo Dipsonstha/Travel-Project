@@ -1,3 +1,37 @@
+<?php
+session_start();
+$error = array(); // Initialize the error array
+print_r($_SESSION);
+
+if (isset($_POST['send'])) {
+    include 'config.php';
+
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = md5($_POST['password']);
+
+    $select = "SELECT * FROM signup_form WHERE email = '$email'";
+    $result = mysqli_query($conn, $select);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_array($result);
+        if ($row['password'] == $password) {
+            if ($row['user_type'] == 'admin') {
+                $_SESSION['admin_name'] = $row['name'];
+                header('Location: dashboard.php');
+                exit;
+            } elseif ($row['user_type'] == 'user') {
+                header('Location: user_dashboard.php');
+                exit;
+            }
+        } else {
+            $error[] = 'Incorrect password!';
+        }
+    } else {
+        $error[] = 'Incorrect email or password!';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,194 +52,146 @@
     <!-- Header Section starts -->
     <section class="header">
 
-        <a href="home.php" class="logo">Travel </a>
+        <a href="home.php" class="logo">Travel</a>
       
         <nav class="navbar">
-        <a href="home.php">home</a>
-        <a href="about.php">About</a>
-        <a href="package.php">Package</a>
+            <a href="home.php">Home</a>
+            <a href="about.php">About</a>
+            <a href="package.php">Package</a>
         </nav>
         <div id="menu-btn" class="fas fa-bars"></div>
-          <div class="icons"> 
+        <div class="icons"> 
             <!-- <i class="fas fa-search" id="search-btn"></i> -->
-             <i class="fas fa-user" id="login-btn"></i>
-</div>
+            <i class="fas fa-user" id="login-btn"></i>
+        </div>
     </section>
+    <!-- Header section Ends -->
 
-<!-- Header section Ends -->
-    <!-- login form container -->
+    <!-- Login form container -->
     <div class="login-form-container">
-    <span class="close-btn" id="form-close">&times;</span>
-        <form action="" class="login-form">
-            <h3>login</h3>
-            <input type="email" class="box" placeholder="enter your email" required >
-            <input type="password" class="box" placeholder="enter your password">
-            <input type="submit" class="btn" value="login now">
+        <span class="close-btn" id="form-close">&times;</span>
+        <form class="login-form" method="POST">
+            <h3>Login</h3>
+            <?php
+            if (!empty($error)) {
+                echo '<div class="error-message">';
+                foreach ($error as $errorMsg) {
+                    echo '<span class="error-msg">' . $errorMsg . '</span>';
+                }
+                echo '</div>';
+            }
+            ?>
+            <input type="email" name="email" class="box" placeholder="Enter your email" required>
+            <input type="password" name="password" class="box" placeholder="Enter your password">
+            <input type="submit" name="send" class="btn" value="Login now">
             <input type="checkbox" id="remember">
-            <label for="remember">remember me</label>
+            <label for="remember">Remember me</label>
             <p class="forgot-password">Forgot password? <a href="#" id="forgot-password-link">Click here</a></p>
-            <p>dont have an account?<a href="signup.php">register now</a></p>
+            <p>Don't have an account? <a href="signup.php">Register now</a></p>
         </form>
     </div>
 
-<div class="heading" style="background:url(image/package5.jpg) no-repeat">
-<h1>Package</h1>
-</div>
-<!-- Package section starts -->
-<section class="packages">
-    <h1 class="heading-title">
-        Top destinations
-    </h1>
-    <div class="box-container">
-        <!-- <?php
-        // $conn = mysqli_connect("localhost","root","","");
-        // $sql = "SELECT * FROM package";
-        // $result = mysqli_query($conn,$sql);
-        // while($row = mysqli_fetch_assoc($result))
-            // echo '<div class="box">
-            // <div class="image"><img src="image/'.$packageImg.'" alt="">
-        // </div>
-        // <div class="content">
-            // <h3>'.$packageName.'</h3
-            // <p>'.$packageType.'</p>
-            // <p class="tour-details">Cost: NRS '.$packageName.' per person | Duration: '.$packageName.' days | Start: '.$packageName.' | End: '.$packageName.' | Inclusive: '.$packageName.'</p>
-            // <a href="book.php?packageid='.$packageName.'" class="btn">Book Now</a>
-        
-        // </div>';
-         ?> -->
-        <div class="box">
-            <div class="image"><img src="image/package1.jpg" alt="">
-        </div>
-        <div class="content">
-            <h3>Mardi Himal</h3>
-            <p>Trekking</p>
-            <p class="tour-details">Cost: NRS 7000 per person | Duration: 7 days | Start: 10th June | End: 17th June | Inclusive: Transportation, Food, Guide</p>
-            <a href="#" class="btn">Book Now</a>
-        
-        </div>
-        </div>
+    <div class="heading" style="background:url(image/package5.jpg) no-repeat">
+        <h1>Package</h1>
+    </div>
 
-        <div class="box">
-            <div class="image"><img src="image/package7.jpg" alt="">
-        </div>
-        <div class="content">
-            <h3>Manang</h3>
-            <p>Trekking & Adventure</p>
-            <p class="tour-details">Cost: NRS 15000 per person | Duration: 10 days | Start: 10th June | End: 20th June | Inclusive: Transportation, Food, Guide</p>
-            <a href="#" class="btn">Book Now</a>
-        
-        </div>
-        </div>
+    <!-- Package section starts -->
+    <section class="packages">
+        <h1 class="heading-title">
+            Top destinations
+        </h1>
+        <div class="box-container">
+            <?php
+            include("config.php");
+            $sql = "SELECT * FROM package";
+            $result = mysqli_query($conn, $sql);
 
-        <div class="box">
-            <div class="image"><img src="image/package3.jpg" alt="">
+            while ($row = mysqli_fetch_assoc($result)) {
+                $imageData = base64_encode($row['image']);
+                echo '<div class="box">
+                        <div class="image"><img src="data:image/jpeg;base64,' . $imageData . '" alt=""></div>
+                        <div class="content">
+                            <h3>' . $row["PackageName"] . '</h3>
+                            <p>' . $row["PackageType"] . '</p>
+                            <p class="tour-details">Cost: NRS ' . $row["cost"] . ' per person | Duration: ' . $row["duration"] . ' days | Start: ' . $row["startDate"] . ' | End: ' . $row["endDate"] . '</p>
+                            <a href="#?packageid=' . $row["id"] . '" class="btn">Book Now</a>
+                        </div>
+                    </div>';
+            }
+            ?>
         </div>
-        <div class="content">
-            <h3>Everest Base Camp (EBC)</h3>
-            <p>Adventure, Trekking & Camping</p>
-            <p class="tour-details">Cost: NRS 25000 per person | Duration: 14 days | Start: 10th June | End: 24th June | Inclusive: Transportation, Food, Guide</p>
-            <a href="#" class="btn">Book Now</a>
-        
-        </div>
-        </div>
+    </section>
+    <!-- Package section ends -->
 
-        <div class="box">
-            <div class="image"><img src="image/mustang.jpg" alt="">
-        </div>
-        <div class="content">
-            <h3>Mustang</h3>
-            <p>Offroad & Adventure</p>
-            <p class="tour-details">Cost: NRS 15000 | Duration: 7 days | Start: 10th June | End: 17th June | Inclusive: Transportation, Food, Guide</p>
-            <a href="#" class="btn">Book Now</a>
-        
-        </div>
-        </div>
+    <section class="package_description">
+        <h2 class="heading-title">Package Description</h2>
+        <h3>Inclusive</h3>
+        <ul>
+            <li>Accommodation in hotel/homestay.</li>
+            <li>Transportation on road</li>
+            <li>Guided tours</li>
+            <li>Meals (breakfast, lunch, and dinner)</li>
+            <li>Entrance fees to tourist sites</li>
+            <li>24/7 customer support</li>
+        </ul>
+        <h3>Exclusive</h3>
+        <ul>
+            <li>Flight tickets</li>
+            <li>Personal expenses</li>
+            <li>Travel insurance</li>
+            <li>Additional activities not mentioned in the itinerary</li>
+        </ul>
+    </section>
 
-        <div class="box">
-            <div class="image"><img src="image/package5.jpg" alt="">
-        </div>
-        <div class="content">
-            <h3>Aama Yangri</h3>
-            <p>Camping & Trekking</p>
-            <p class="tour-details">Cost: NRS 3500 | Duration: 3 days | Start: 11th June | End: 14th June | Inclusive: Transportation, Food, Guide</p>
-            <a href="#" class="btn">Book Now</a>
-        
-        </div>
+    <!-- Footer section starts -->
+    <section class="footer">
+        <div class="box-container">
+            <div class="box"> 
+                <h3>Quick Links</h3>
+                <a href="home.php"><i class="fas fa-angle-right"></i> Home</a>
+                <a href="about.php"><i class="fas fa-angle-right"></i> About</a>
+                <a href="package.php"><i class="fas fa-angle-right"></i> Package</a>
+                <a href="book.php"><i class="fas fa-angle-right"></i> Book</a>
             </div>
 
-        <div class="box">
-            <div class="image"><img src="image/package6.jpg" alt="">
-        </div>
-        <div class="content">
-            <h3>Upper Dolpa</h3>
-            <p>Adventure & Trekking</p>
-            <p class="tour-details">Cost: NRS 40000 | Duration: 18 days | Start: 10th June | End: 28th June | Inclusive: Transportation, Food, Guide</p>
-            <a href="#" class="btn">Book Now</a>
-        
-        </div>
-        </div>
+            <div class="box">
+                <h3>Extra Links</h3>
+                <a href="#"><i class="fas fa-angle-right"></i> Ask Question</a>
+                <a href="#"><i class="fas fa-angle-right"></i> About Us</a>
+                <a href="#"><i class="fas fa-angle-right"></i> Privacy Policy</a>
+                <a href="#"><i class="fas fa-angle-right"></i> Terms of Use</a>
+            </div>
 
- 
-    </div>
-    
-    <div class="load-more"><span class="btn">load more</span></div>
-    
-</section>
-<!-- Package section ends -->
-<!-- Foter section   starts -->
-    <section class="footer">
-        
-    <div class="box-container">
-       <div class="box"> 
-       <h3>Quick Links</h3>
-
-        <a href="home.php"> <i class="fas fa-angle-right"></i>home</a>
-        <a href="about.php"> <i class="fas fa-angle-right"></i>About</a>
-        <a href="package.php"><i class="fas fa-angle-right"></i>Package</a>
-        <a href="book.php"><i class="fas fa-angle-right"></i>Book</a>
-        
-    </div>
-
-        <div class="box">
-            <h3>Extra Links</h3>
-            
-            <a href="#"> <i class="fas fa-angle-right"></i>Ask Question</a>
-            <a href="#"> <i class="fas fa-angle-right"></i>About Us</a>
-            <a href="#"><i class="fas fa-angle-right"></i>Privacy Policy</a>
-            <a href="#"><i class="fas fa-angle-right"></i>Terms of Use</a>
- 
- 
+            <div class="box">
+                <h3>Follow Us</h3>
+                <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="#"><i class="fab fa-linkedin"></i> Linkedin</a>
+            </div>
         </div>
-
-        <div class="box">
-            <h3>Contact Us</h3>
-            
-            <a href="#"> <i class="fas fa-phone"></i>+977-9874561230</a>
-            <a href="#"> <i class="fas fa-phone"></i>01-1234567</a>
-            <a href="#"><i class="fas fa-envelope"></i>TravelNepal@gmail.com</a>
-            <a href="#"><i class="fas fa-map"></i>kathmandu-13, Nepal</a>
- 
-        </div>
-
-        <div class="box">
-            <h3>Follow Us</h3>
-            <a href="#"> <i class="fab fa-facebook-f"></i>facebook</a>
-            <a href="#"> <i class="fab fa-instagram"></i>instagram</a>
-            <a href="#"><i class="fab fa-twitter"></i>twitter</a>
-            <a href="#"><i class="fab fa-linkedin"></i>linkedin</a>
- 
-        </div>
-</div>
     </section>
-<!-- Footer section ends -->
+    <!-- Footer section ends -->
 
-<!-- Swiper Js Link -->
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-
-<!-- Custom Js Link -->
-
-<script src="js/script.js"></script>
-
+    <script src="js/script.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".box-container", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+            },
+        });
+    </script>
 </body>
 </html>

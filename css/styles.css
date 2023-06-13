@@ -602,8 +602,36 @@ text-align: center;
     text-align: center;
     margin-top: 2rem;
 }
-
-
+.package_description {
+    padding: 50px;
+    background-color: #f8f8f8;
+  }
+  
+  .package_description h2.heading-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .package_description h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .package_description ul {
+    margin-bottom: 20px;
+  }
+  
+  .package_description li {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+  }
+  
+  
 .booking .heading-title{
     text-align: center;
     margin-bottom: 3rem;
@@ -700,7 +728,11 @@ transition: .2s linear;
 .footer .box-container .box a:hover i{
 padding-right: 2rem;
 }
-
+.logoutDiv{
+    background-color: white;
+    width: 500px;
+    height: 200px;
+}
 /*Media query*/
 @media (max-width:1200px){
     section{

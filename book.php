@@ -16,19 +16,14 @@
 </head>
 <body>
 
-<script>
-  if (window.location.search.includes('submitted=true')) {
-    alert('Your booking has been submitted.');
-  }
-</script>
 
     <!-- Header Section starts -->  
     <section class="header">
 
-        <a href="home.php" class="logo">Travel </a>
+        <a href="user_dashboard.php" class="logo">Travel </a>
       
         <nav class="navbar">
-        <a href="home.php">home</a>
+        <a href="user_dashboard.php">home</a>
         <a href="about.php">About</a>
         <a href="package.php">Package</a>
         <a href="book.php">Booking</a>
@@ -62,7 +57,7 @@
 
 <h1 class="heading-title">Book your Trip!</h1>
 
-<form action="book_form.php?submitted=true" method="post" class="booking-form">
+<form action="book_form.php?submitted=true" method="post" class="booking-form" id="booking-form" >
 
 <div class="flex">
     <div class="inputBox">
@@ -161,6 +156,13 @@
     <!-- Custom Js Link -->
     
     <script src="js/script.js"></script>
-    
+    <script>
+        let bookingForm = document.getElementById("booking-form");
+        bookingForm.guests.addEventListener("change",function(){
+            if(bookingForm.guests.value < 0){
+                bookingForm.guests.value = 0;
+            }
+        })
+    </script>
     </body>
     </html>

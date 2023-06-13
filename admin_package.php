@@ -57,7 +57,7 @@
             //read all row from database table;
             $sql = "SELECT * FROM `package`";
             $result = $conn->query($sql);
-
+            $idnum=1;
             if(!$result){
             die("Invalid Query: " . $conn->error);
             }
@@ -66,19 +66,20 @@
             while($row = $result->fetch_assoc()){
                 echo" 
                 <tr>
-                <td>$row[id]</td>
-                <td>$row[PackageName]</td>
-                <td>$row[PackageType]</td>
-                <td>$row[cost]</td>
-                <td>$row[duration]</td>
-                <td>$row[startDate]</td>
-                <td>$row[endDate]</td>
-                <td>
-                    <a href='update.php?id=$row[id]' class='btn'>Edit</a>
-                    <a href='delete.php?id=$row[id]' class='btn'>Delete</a>
-                </td>
-                </tr>
-                     ";
+              <td>$idnum</td>
+              <td>$row[PackageName]</td>
+              <td>$row[PackageType]</td>
+              <td>$row[cost]</td>
+              <td>$row[duration]</td>
+              <td>$row[startDate]</td>
+              <td>$row[endDate]</td>
+              <td>
+              <a href='update.php?id=$row[id]' class='btn'>Edit</a>
+              <a href='delete.php?id=$row[id]' class='btn'>Delete</a>
+              </td>
+              </tr>
+              ";
+              $idnum++;
             }
 
 

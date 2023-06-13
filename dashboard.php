@@ -27,7 +27,6 @@
 
 <nav class="navbar">
 <a href="dashboard.php">Dashboard</a>
-<a href="#"></a>
 <a href="admin_package.php">Packages</a>
 <a href="#">Bookings</a>
 </nav>

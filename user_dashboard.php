@@ -30,7 +30,7 @@ if(isset($_SESSION['user_name'])){
 <section class="header">
     <a href="user_dashboard.php" class="logo">Travel</a>
     <nav class="navbar">
-        <a href=".php">home</a>
+        <a href="user_dashboard.php">home</a>
         <a href="about.php">About</a>
         <a href="package.php">Package</a>
         <a href="book.php">booking</a>

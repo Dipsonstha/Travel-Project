@@ -7,6 +7,7 @@ $cost = "";
 $duration = "";
 $startDate = "";
 $endDate = "";
+$image = "";
 
 $errorMessage = "";
 $successMessage = "";
@@ -18,26 +19,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $duration = $_POST["duration"];
     $startDate = $_POST["startDate"];
     $endDate = $_POST["endDate"];
+    $image = $_FILES["image"]["name"]; // Get the name of the uploaded file
 
     // Perform form validation
-    if (empty($packageName) || empty($packageType) || empty($cost) || empty($duration) || empty($startDate) || empty($endDate)) {
-        $errorMessage = "All the fields are required";
+    if (empty($packageName) || empty($packageType) || empty($cost) || empty($duration) || empty($startDate) || empty($endDate) || empty($image)) {
+        $errorMessage = "All fields are required";
     } else {
-        // Add new package to the database
-        $sql = "INSERT INTO `package` (PackageName, PackageType, Cost, Duration, StartDate, EndDate) VALUES ('$packageName', '$packageType', '$cost', '$duration', '$startDate', '$endDate')";
+        // Move the uploaded file to a desired location
+        $targetDir = "image/"; // Specify the directory where you want to save the uploaded images
+        $targetFilePath = $targetDir . basename($image);
         
-        if ($conn->query($sql) === true) {
-            $successMessage = "Package added successfully";
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+            // Image uploaded successfully, now save the file path to the database
+            $image = $targetFilePath;
+
+            // Add new package to the database
+            $sql = "INSERT INTO `package` (PackageName, PackageType, Cost, Duration, StartDate, EndDate, image) VALUES ('$packageName', '$packageType', '$cost', '$duration', '$startDate', '$endDate', '$image')";
             
-            // Reset form fields after successful insertion
-            $packageName = "";
-            $packageType = "";
-            $cost = "";
-            $duration = "";
-            $startDate = "";
-            $endDate = "";
+            if ($conn->query($sql) === true) {
+                $successMessage = "Package added successfully";
+                
+                // Reset form fields after successful insertion
+                $packageName = "";
+                $packageType = "";
+                $cost = "";
+                $duration = "";
+                $startDate = "";
+                $endDate = "";
+                $image = "";
+            } else {
+                $errorMessage = "Error: " . $conn->error;
+            }
         } else {
-            $errorMessage = "Error: " . $conn->error;
+            $errorMessage = "Failed to upload the image";
         }
     }
 }
@@ -83,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <div class="add-products">
     <h1 class="heading-title">Add New Packages</h1>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data" id="add-package">
         <div class="flex">
             <div class="inputBox">
             <span>Package Name :</span>
@@ -107,19 +121,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             <div class="inputBox">
             <span>Start Date :</span>
-                <input type="date" name="startDate" value="<?php echo $startDate; ?>">
+                <input type="date" name="startDate" id="startDate" value="<?php echo $startDate; ?>">
             </div>
             
             <div class="inputBox">
             <span>End Date :</span>
-                <input type="date" name="endDate" value="<?php echo $endDate; ?>">
+                <input type="date" name="endDate" id="endDate" value="<?php echo $endDate; ?>">
             </div>
+            
+            <div class="inputBox">
+            <span>Image :</span>
+                <input type="file" name="image">
+            </div>
+
             <div class="button">
                 <button type="submit" class="btn">Submit</button>
                 <a href="admin_package.php" role="button" class="btn">Back</a>
             </div>
         </div>
     </form>
+    
     <?php if (!empty($errorMessage)) { ?>
         <div class="error-message"><?php echo $errorMessage; ?></div>
     <?php } ?>
@@ -134,6 +155,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!-- Custom Js Link -->
 <script  src="js/script.js"></script>
+<script>
+    let packageForm = document.getElementById("add-package");
+    packageForm.cost.addEventListener("change", function() {
+        if (packageForm.cost.value < 0) {
+            packageForm.cost.value = 0;
+        }
+    });
 
+    packageForm.duration.addEventListener("change", function() {
+        if (packageForm.duration.value < 0) {
+            packageForm.duration.value = 0;
+        }
+        updateEndDate();
+    });
+
+    packageForm.startDate.addEventListener("change", function() {
+        updateEndDate();
+    });
+
+    function updateEndDate() {
+        let startDate = new Date(packageForm.startDate.value);
+        let duration = parseInt(packageForm.duration.value);
+        if (!isNaN(startDate.getTime()) && !isNaN(duration)) {
+            let endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + duration);
+            if (!isNaN(endDate.getTime())) {
+                packageForm.endDate.value = formatDate(endDate);
+            }
+        }
+    }
+
+    function formatDate(date) {
+        let year = date.getFullYear();
+        let month = String(date.getMonth() + 1).padStart(2, "0");
+        let day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    }
+</script>
 </body>
 </html>

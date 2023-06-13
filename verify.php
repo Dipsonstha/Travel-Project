@@ -29,10 +29,5 @@ if($result->num_rows > 0 )
 if($count == 0)
 {
 ?>
-<script>
-    alert("incorrect");
-    location.href = "http://localhost/travel-project/home_login.php?#"
-
-</script>
 <?php 
 }?>

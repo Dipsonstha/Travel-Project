@@ -22,7 +22,13 @@ if (isset($_POST['send'])) {
             $insert = "INSERT INTO signup_form(name, email, password, user_type) VALUES('$name','$email','$password','$user_type')";
             mysqli_query($conn, $insert);
 
-            header('Location: home.php');
+             // Store the user data in session for later use
+             session_start();
+             $_SESSION['name'] = $name;
+             $_SESSION['email'] = $email;
+ 
+
+            header('Location: book.php');
             exit;
         }
     }
@@ -156,6 +162,28 @@ if (isset($_POST['send'])) {
 
     <!-- Swiper Js Link -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    <script>
+        // Automatically fill the input boxes in the book form with user data
+        window.onload = function() {
+            var nameInput = document.querySelector('input[name="name"]');
+            var emailInput = document.querySelector('input[name="email"]');
+            var bookForm = document.getElementById('booking-form');
+
+            // Check if the name and email session variables are set
+            if ('<?php echo isset($_SESSION['name']); ?>' && '<?php echo isset($_SESSION['email']); ?>') {
+                nameInput.value = '<?php echo $_SESSION['name']; ?>';
+                emailInput.value = '<?php echo $_SESSION['email']; ?>';
+            }
+
+            // Clear the session variables after filling the input boxes
+            <?php unset($_SESSION['name']); ?>
+            <?php unset($_SESSION['email']); ?>
+
+            // Submit the book form automatically after filling the input boxes
+            bookForm.submit();
+        };
+    </script>
 
     <!-- Custom Js Link -->
     <script src="js/script.js"></script>
