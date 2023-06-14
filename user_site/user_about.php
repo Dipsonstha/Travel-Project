@@ -1,6 +1,35 @@
-<?php
- include 'redirect.php';
-?>
+<!-- <?php
+session_start();
+$error = array(); // Initialize the error array
+
+if (isset($_POST['send'])) {
+    include 'config.php';
+
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = md5($_POST['password']);
+
+    $select = "SELECT * FROM signup_form WHERE email = '$email'";
+    $result = mysqli_query($conn, $select);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_array($result);
+        if ($row['password'] == $password) {
+            if ($row['user_type'] == 'admin') {
+                $_SESSION['admin_name'] = $row['name'];
+                header('Location: dashboard.php');
+                exit;
+            } elseif ($row['user_type'] == 'user') {
+                header('Location: user_dashboard.php');
+                exit;
+            }
+        } else {
+            $error[] = 'Incorrect password!';
+        }
+    } else {
+        $error[] = 'Incorrect email or password!';
+    }
+}
+?> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +41,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
 
     <!-- Custom Css link -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <!-- Font awsome link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
@@ -20,19 +49,16 @@
 <body>
     <!-- Header Section starts -->
     <?php
- include 'header.php';
-?>
+    include 'header.php';
+    ?>
 <!-- Header section Ends -->
-<?php
- include 'login.php';
-?>
-<div class="heading" style="background:url(image/slider1.jpg) no-repeat">
+<div class="heading" style="background:url(../image/slider1.jpg) no-repeat">
 <h1>About us</h1>
 </div>
 <!-- about section starts -->
 <section class="about">
     <div class="image">
-        <img src="image/about.jpg" alt="">
+        <img src="../image/about.jpg" alt="">
     </div>
     <div class="content">
         <h3>Why choose us ?</h3>
@@ -60,9 +86,9 @@
 </section>
 <!-- about section ends   -->
 <!-- Foter section   starts -->
-<?php
- include 'footer.php';
-?>
+  <?php 
+  include '../footer.php';
+  ?>
     <!-- Footer section ends -->
     
     <!-- Swiper Js Link -->
@@ -71,7 +97,7 @@
     
     <!-- Custom Js Link -->
     
-    <script src="js/script.js"></script>
+    <script src="../js/script.js"></script>
     
     </body>
     </html>

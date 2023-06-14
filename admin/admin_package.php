@@ -11,7 +11,7 @@
 
 
     <!-- Custom CSS link -->
-    <link rel="stylesheet" href="css/admin_style.css">
+    <link rel="stylesheet" href="../css/admin_style.css">
 
         <!-- Font awsome link -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -29,7 +29,7 @@
 </nav>
 <div id="menu-btn" class="fas fa-bars"></div>
 <div class="icons"> 
-<a href="home.php"> <i class="fas fa-user" id="login-btn"></i></a>
+<a href="../home.php"> <i class="fas fa-user" id="login-btn"></i></a>
 </div>
 </div>
 </section>
@@ -53,7 +53,7 @@
         </tr>
         <tbody>
             <?php
-            include "config.php";
+            include "../config.php";
             //read all row from database table;
             $sql = "SELECT * FROM `package`";
             $result = $conn->query($sql);
@@ -91,7 +91,7 @@
 </section>
    <!-- Custom Js Link -->
 
-   <script  src="js/admin_script.js"></script>
+   <script  src="../js/admin_script.js"></script>
  
 </body>
 </html>

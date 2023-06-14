@@ -3,7 +3,7 @@
 if(isset($_GET["id"])){
     $id = $_GET["id"];
 
-    include "config.php";
+    include "../config.php";
 
     $sql = "DELETE FROM `package` WHERE id = $id";
     $conn->query($sql);

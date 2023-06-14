@@ -28,7 +28,7 @@ if (isset($_POST['send'])) {
              $_SESSION['email'] = $email;
  
 
-            header('Location: book.php');
+            header('Location:/user_site/book.php');
             exit;
         }
     }
@@ -56,36 +56,13 @@ if (isset($_POST['send'])) {
 
 <body>
     <!-- Header Section starts -->
-    <section class="header">
-
-        <a href="home.php" class="logo">Travel</a>
-
-        <nav class="navbar">
-            <a href="home.php">home</a>
-            <a href="about.php">About</a>
-            <a href="package.php">Package</a>
-            <a href="book.php">Book</a>
-        </nav>
-        <div id="menu-btn" class="fas fa-bars"></div>
-        <div class="icons">
-            <!-- <i class="fas fa-search" id="search-btn"></i> -->
-            <i class="fas fa-user" id="login-btn"></i>
-        </div>
-    </section>
+    <?php
+    include 'header.php';
+    ?>
     <!-- login form container -->
-    <div class="login-form-container">
-        <span class="close-btn" id="form-close">&times;</span>
-        <form action="" class="login-form">
-            <h3>login</h3>
-            <input type="email" name="" class="box" placeholder="enter your email">
-            <input type="password" name="" class="box" placeholder="enter your password">
-            <input type="submit" class="btn" value="login now">
-            <input type="checkbox" id="remember">
-            <label for="remember">remember me</label>
-            <p>forgot password? <a href="#">click here</a></p>
-            <p>dont have an account?<a href="signup.php">register now</a></p>
-        </form>
-    </div>
+    <?php
+    include 'login.php';
+    ?>
     <!-- signup form started -->
     <div class="signup-form-container">
         <form action="" method="post" class="signup-form" name="myForm" onsubmit="return validateForm()">
@@ -114,50 +91,9 @@ if (isset($_POST['send'])) {
     </div>
     <!-- signup form ended -->
     <!-- Foter section   starts -->
-    <section class="footer">
-
-        <div class="box-container">
-            <div class="box">
-                <h3>Quick Links</h3>
-
-                <a href="home.php"> <i class="fas fa-angle-right"></i>home</a>
-                <a href="about.php"> <i class="fas fa-angle-right"></i>About</a>
-                <a href="package.php"><i class="fas fa-angle-right"></i>Package</a>
-                <a href="book.php"><i class="fas fa-angle-right"></i>Book</a>
-
-            </div>
-
-            <div class="box">
-                <h3>Extra Links</h3>
-
-                <a href="#"> <i class="fas fa-angle-right"></i>Ask Question</a>
-                <a href="#"> <i class="fas fa-angle-right"></i>About Us</a>
-                <a href="#"><i class="fas fa-angle-right"></i>Privacy Policy</a>
-                <a href="#"><i class="fas fa-angle-right"></i>Terms of Use</a>
-
-
-            </div>
-
-            <div class="box">
-                <h3>Contact Us</h3>
-
-                <a href="#"> <i class="fas fa-phone"></i>+977-9874561230</a>
-                <a href="#"> <i class="fas fa-phone"></i>01-1234567</a>
-                <a href="#"><i class="fas fa-envelope"></i>TravelNepal@gmail.com</a>
-                <a href="#"><i class="fas fa-map"></i>kathmandu-13, Nepal</a>
-
-            </div>
-
-            <div class="box">
-                <h3>Follow Us</h3>
-                <a href="#"> <i class="fab fa-facebook-f"></i>facebook</a>
-                <a href="#"> <i class="fab fa-instagram"></i>instagram</a>
-                <a href="#"><i class="fab fa-twitter"></i>twitter</a>
-                <a href="#"><i class="fab fa-linkedin"></i>linkedin</a>
-
-            </div>
-        </div>
-    </section>
+    <?php
+    include 'footer.php';
+    ?>
     <!-- Footer section ends -->
 
     <!-- Swiper Js Link -->

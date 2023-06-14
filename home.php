@@ -1,36 +1,6 @@
 <?php
-session_start();
-$error = array(); // Initialize the error array
-
-if (isset($_POST['send'])) {
-    include 'config.php';
-
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = md5($_POST['password']);
-
-    $select = "SELECT * FROM signup_form WHERE email = '$email'";
-    $result = mysqli_query($conn, $select);
-
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_array($result);
-        if ($row['password'] == $password) {
-            if ($row['user_type'] == 'admin') {
-                $_SESSION['admin_name'] = $row['name'];
-                header('Location: dashboard.php');
-                exit;
-            } elseif ($row['user_type'] == 'user') {
-                header('Location: user_dashboard.php');
-                exit;
-            }
-        } else {
-            $error[] = 'Incorrect password!';
-        }
-    } else {
-        $error[] = 'Incorrect email or password!';
-    }
-}
+ include 'redirect.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,49 +21,15 @@ if (isset($_POST['send'])) {
 
 <body>
     <!-- Header Section starts -->
-    <section class="header">
-
-        <a href="home.php" class="logo">Travel </a>
-    
-        <nav class="navbar">
-        <a href="home.php">home</a>
-        <a href="about.php">About</a>
-        <a href="package.php">Package</a>
-        </nav>
-        <div id="menu-btn" class="fas fa-bars"></div>
-        <div class="icons"> 
-            <!-- <i class="fas fa-search" id="search-btn"></i> -->
-            <i class="fas fa-user" id="login-btn"></i>
-    </div>
-
-    </section>
+    <?php
+    include 'header.php';
+    ?>
 
 <!-- Header section Ends -->
 <!-- login form container -->
-<div class="login-form-container">
-<span class="close-btn" id="form-close">&times;</span>
-    <form class="login-form" method="POST">
-        <h3>login</h3>
-        
-        <?php
-    if (!empty($error)) {
-    echo '<div class="error-message">';
-    foreach ($error as $errorMsg) {
-        echo '<span class="error-msg">' . $errorMsg . '</span>';
-    }
-    echo '</div>';
-}
+<?php
+ include 'login.php';
 ?>
-
-        <input type="email" name="email" class="box" placeholder="enter your email" required>
-        <input type="password" name="password" class="box" placeholder="enter your password" required>
-        <input type="submit" name="send" class="btn" value="login now">
-        <input type="checkbox" id="remember">
-        <label for="remember">remember me</label>
-        <p class="forgot-password">Forgot password? <a href="#" id="forgot-password-link">Click here</a></p>
-        <p>dont have an account?<a href="signup.php">register now</a></p>
-    </form>
-</div>
 <!-- Home section starts -->
 <section class="home">
     <div class="swiper home-slider">
@@ -145,9 +81,6 @@ if (isset($_POST['send'])) {
 </section>
 
 
-
-
-
 <!-- Service Section Ends -->
 
 <!-- About section Starts -->
@@ -169,7 +102,7 @@ if (isset($_POST['send'])) {
 
 <!-- Home Package section Starts -->
 <section class="home-packages">
-    <h1 class="heading">our packages</h1>
+    <h1 class="heading">Top destinations</h1>
     <div class="box-container">
         <div class="box">
             <div class="image">
@@ -177,8 +110,8 @@ if (isset($_POST['send'])) {
                 </div>
                 <div class="content">
                     <h3>Mardi</h3>
-                <p>The Himalaya</p>
-                <a href="#" class="btn">Book</a>
+                    <p>The Himalaya</p>
+                    <p>One of the most popular Trekking destinations in Nepal with the spectactular views of himalayas</p>
                 </div>
                 </div>
 
@@ -204,56 +137,15 @@ if (isset($_POST['send'])) {
                 </div>
                 </div>
         </div>
-        <div class="load-more"><a href="package.php" class="btn">load more</a></div>
+        <!-- <div class="load-more"><a href="package.php" class="btn">load more</a></div> -->
     </div>
 
 </section>
 <!-- Home package section ends -->
 <!-- Footer section   starts -->
-<section class="footer">
-
-<div class="box-container">
-<div class="box"> 
-<h3>Quick Links</h3>
-
-    <a href="home.php"> <i class="fas fa-angle-right"></i>home</a>
-    <a href="about.php"> <i class="fas fa-angle-right"></i>About</a>
-    <a href="package.php"><i class="fas fa-angle-right"></i>Package</a>
-    <a href="book.php"><i class="fas fa-angle-right"></i>Book</a>
-    
-</div>
-
-    <div class="box">
-        <h3>Extra Links</h3>
-        
-        <a href="#"> <i class="fas fa-angle-right"></i>Ask Question</a>
-        <a href="#"> <i class="fas fa-angle-right"></i>About Us</a>
-        <a href="#"><i class="fas fa-angle-right"></i>Privacy Policy</a>
-        <a href="#"><i class="fas fa-angle-right"></i>Terms of Use</a>
-
-
-    </div>
-
-    <div class="box">
-        <h3>Contact Us</h3>
-        
-        <a href="#"> <i class="fas fa-phone"></i>+977-9874561230</a>
-        <a href="#"> <i class="fas fa-phone"></i>01-1234567</a>
-        <a href="#"><i class="fas fa-envelope"></i>TravelNepal@gmail.com</a>
-        <a href="#"><i class="fas fa-map"></i>kathmandu-13, Nepal</a>
-
-    </div>
-
-    <div class="box">
-        <h3>Follow Us</h3>
-        <a href="#"> <i class="fab fa-facebook-f"></i>facebook</a>
-        <a href="#"> <i class="fab fa-instagram"></i>instagram</a>
-        <a href="#"><i class="fab fa-twitter"></i>twitter</a>
-        <a href="#"><i class="fab fa-linkedin"></i>linkedin</a>
-
-    </div>
-</div>
-</section>
+<?php
+ include 'footer.php';
+?>
 <!-- Footer section ends -->
 
 <!-- Swiper Js Link -->

@@ -54,7 +54,7 @@ if (isset($_POST['send'])) {
         echo 'Form successfully booked!';
 
         // Redirect to the book.php page
-        header('location: book.php');
+        header('location: ../user_site/book.php');
         exit();
     } else {
         // Some required fields are empty, display an error message

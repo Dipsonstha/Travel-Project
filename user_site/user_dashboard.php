@@ -1,5 +1,6 @@
 <?php
-include 'config.php';
+include '../config.php';
+
 session_start();
 
 if(isset($_SESSION['user_name'])){
@@ -18,7 +19,7 @@ if(isset($_SESSION['user_name'])){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"> 
 
     <!-- Custom Css link -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <!-- Font awsome link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
@@ -27,25 +28,15 @@ if(isset($_SESSION['user_name'])){
 
 <body>
     <!-- Header Section starts -->
-<section class="header">
-    <a href="user_dashboard.php" class="logo">Travel</a>
-    <nav class="navbar">
-        <a href="user_dashboard.php">home</a>
-        <a href="about.php">About</a>
-        <a href="package.php">Package</a>
-        <a href="book.php">booking</a>
-    </nav>
-    <div id="menu-btn" class="fas fa-bars"></div>
-    <a href="home.php"> <i class="fas fa-user" id="login-btn"></i></a>
-   
-        
-</section>
+    <?php
+    include 'header.php';
+    ?>
 <!-- Header section Ends -->
 
 <section class="home">
     <div class="swiper home-slider">
         <div class="swiper-wrapper">
-            <div class="swiper-slide slide" style="background:url(image/slider1.jpg) no-repeat" >
+            <div class="swiper-slide slide" style="background:url(../image/slider1.jpg) no-repeat" >
                 <div class="content">
                     <span>Explore, Discover, Travel</span>
                     <h3>Travel Nepal</h3>
@@ -64,27 +55,27 @@ if(isset($_SESSION['user_name'])){
     <div class="box-container">
 
         <div class="box">
-            <img src="image/icon1.png" alt="">
+            <img src="../image/icon1.png" alt="">
         <h3>Adventures</h3>
         </div>
 
         <div class="box">
-            <img src="image/icon2.png" alt="">
+            <img src="../image/icon2.png" alt="">
         <h3>Tour Guide</h3>
         </div>
 
         <div class="box">
-            <img src="image/icon3.png" alt="">
+            <img src="../image/icon3.png" alt="">
         <h3>Trekking</h3>
         </div>
 
         <div class="box">
-            <img src="image/icon4.png" alt="">
+            <img src="../image/icon4.png" alt="">
         <h3>Off Road</h3>
         </div>
 
         <div class="box">
-            <img src="image/icon5.png" alt="">
+            <img src="../image/icon5.png" alt="">
         <h3>Camping</h3>
         </div>
 
@@ -100,7 +91,7 @@ if(isset($_SESSION['user_name'])){
 <!-- About section Starts -->
 <section class="home-about">
     <div class="image">
-        <img src="image/about.jpg" alt="">
+        <img src="../image/about.jpg" alt="">
     </div>
     <div class="content">
         <h3>About Us</h3>
@@ -108,7 +99,7 @@ if(isset($_SESSION['user_name'])){
             platform that simplifies the process of planning and booking unforgettable travel experiences.</p>
             <p>We believe that traveling is more than just visiting new places; it's about immersing oneself in the local culture, connecting with nature, and creating lifelong memories.
             With this vision in mind, we have curated a diverse collection of tours that encapsulate the essence of Nepal's beauty and heritage.</p>
-    <a href="about.php" class="btn">read more</a>
+    <a href="user_about.php" class="btn">read more</a>
             </div>
 
 </section>
@@ -120,87 +111,46 @@ if(isset($_SESSION['user_name'])){
     <div class="box-container">
         <div class="box">
             <div class="image">
-                <img src="image/package1.jpg" alt="">
+                <img src="../image/package1.jpg" alt="">
                 </div>
                 <div class="content">
                     <h3>Mardi</h3>
                 <p>The Himalaya</p>
-                <a href="book.php" class="btn">Book</a>
+                <!-- <a href="book.php" class="btn">Book</a> -->
                 </div>
                 </div>
 
             <div class="box">
             <div class="image">
-                <img src="image/package2.jpg" alt="">
+                <img src="../image/package2.jpg" alt="">
                 </div>
                 <div class="content">
                     <h3>Adventure & Tour</h3>
                 <p>Lorem ipsum dolor sit amet.</p>
-                <a href="book.php" class="btn">Book</a>
+                <!-- <a href="book.php" class="btn">Book</a> -->
                 </div>
             </div>
 
             <div class="box">
             <div class="image">
-                <img src="image/package3.jpg" alt="">
+                <img src="../image/package3.jpg" alt="">
                 </div>
                 <div class="content">
                     <h3>Adventure & Tour</h3>
                 <p>Lorem ipsum dolor sit amet.</p>
-                <a href="book.php" class="btn">Book</a>
+                <!-- <a href="book.php" class="btn">Book</a> -->
                 </div>
                 </div>
         </div>
-        <div class="load-more"><a href="package.php" class="btn">load more</a></div>
+        <!-- <div class="load-more"><a href="package.php" class="btn">load more</a></div> -->
     </div>
 
 </section>
 <!-- Home package section ends -->
 <!-- Footer section   starts -->
-<section class="footer">
-
-<div class="box-container">
-<div class="box"> 
-<h3>Quick Links</h3>
-
-    <a href="home.php"> <i class="fas fa-angle-right"></i>home</a>
-    <a href="about.php"> <i class="fas fa-angle-right"></i>About</a>
-    <a href="package.php"><i class="fas fa-angle-right"></i>Package</a>
-    <a href="book.php"><i class="fas fa-angle-right"></i>Book</a>
-    
-</div>
-
-    <div class="box">
-        <h3>Extra Links</h3>
-        
-        <a href="#"> <i class="fas fa-angle-right"></i>Ask Question</a>
-        <a href="#"> <i class="fas fa-angle-right"></i>About Us</a>
-        <a href="#"><i class="fas fa-angle-right"></i>Privacy Policy</a>
-        <a href="#"><i class="fas fa-angle-right"></i>Terms of Use</a>
-
-
-    </div>
-
-    <div class="box">
-        <h3>Contact Us</h3>
-        
-        <a href="#"> <i class="fas fa-phone"></i>+977-9874561230</a>
-        <a href="#"> <i class="fas fa-phone"></i>01-1234567</a>
-        <a href="#"><i class="fas fa-envelope"></i>TravelNepal@gmail.com</a>
-        <a href="#"><i class="fas fa-map"></i>kathmandu-13, Nepal</a>
-
-    </div>
-
-    <div class="box">
-        <h3>Follow Us</h3>
-        <a href="#"> <i class="fab fa-facebook-f"></i>facebook</a>
-        <a href="#"> <i class="fab fa-instagram"></i>instagram</a>
-        <a href="#"><i class="fab fa-twitter"></i>twitter</a>
-        <a href="#"><i class="fab fa-linkedin"></i>linkedin</a>
-
-    </div>
-</div>
-</section>
+<?php
+include '../footer.php';
+?>
 <!-- Footer section ends -->
 
 <!-- Swiper Js Link -->
@@ -209,7 +159,7 @@ if(isset($_SESSION['user_name'])){
 
 <!-- Custom Js Link -->
 
-<script  src="js/script.js"></script>
+<script  src="../js/script.js"></script>
 
 
 </body>

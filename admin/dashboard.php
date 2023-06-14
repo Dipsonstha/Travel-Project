@@ -12,7 +12,7 @@
 
 
     <!-- Custom CSS link -->
-    <link rel="stylesheet" href="css/admin_style.css">
+    <link rel="stylesheet" href="../css/admin_style.css">
 
      <!-- Font awsome link -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -47,7 +47,7 @@
  
     <!-- Custom Js Link -->
 
-<script  src="js/admin_script.js"></script>
+<script  src="../js/admin_script.js"></script>
  
 </body>
 </html>

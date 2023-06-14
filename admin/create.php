@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include '../config.php';
 
 $packageName = "";
 $packageType = "";
@@ -70,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"> 
 
 
-    <!-- Custom CSS link -->
-    <link rel="stylesheet" href="css/admin_style.css">
+        <!-- Custom CSS link -->
+    <link rel="stylesheet" href="../css/admin_style.css">
 
         <!-- Font awsome link -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div id="menu-btn" class="fas fa-bars"></div>
     <div class="icons"> 
     <!-- logout btn -->
-    <a href="home.php"> <i class="fas fa-user" id="login-btn"></i></a>
+    <a href="../home.php"> <i class="fas fa-user" id="login-btn"></i></a>
     </div>
     </div>
 </section>
@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script> 
 
 <!-- Custom Js Link -->
-<script  src="js/script.js"></script>
+<script  src="../js/script.js"></script>
 <script>
     let packageForm = document.getElementById("add-package");
     packageForm.cost.addEventListener("change", function() {
