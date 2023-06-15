@@ -33,7 +33,7 @@
 <div id="menu-btn" class="fas fa-bars"></div>
 <div class="icons"> 
 <!-- logout btn -->
-<a href="home.php"> <i class="fas fa-user" id="login-btn"></i></a>
+<a href="../home.php" id="login-btn"> <i class="fas fa-user"></i></a>
 </div>
 </div>
 </section>
@@ -44,7 +44,16 @@
             <h1>welcome </span></h1>  
         </div>
     </div>
- 
+ <script>
+document.getElementById("login-btn").addEventListener("click",function(event){
+   event.preventDefault();
+   logoutMessage();
+});
+
+function logoutMessage(){
+   Alert("Do you want to logout?");
+}
+</script>
     <!-- Custom Js Link -->
 
 <script  src="../js/admin_script.js"></script>

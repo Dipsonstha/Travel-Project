@@ -27,6 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // Move the uploaded file to a desired location
         $targetDir = "image/"; // Specify the directory where you want to save the uploaded images
+
+        // Check if the target directory exists, if not, create it
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+
         $targetFilePath = $targetDir . basename($image);
         
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
@@ -56,6 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+<!-- Rest of the HTML code remains unchanged -->
 
 
 <!DOCTYPE html>
