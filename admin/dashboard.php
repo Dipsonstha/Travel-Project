@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,28 +19,20 @@
 
 </head>
 <body>
-<section class="header">
-<div class="flex">
-<a href="dashboard.php" class="logo"><span> Admin Pannel </span></a>
+    <!-- header section -->
+<?php
+include 'header.php';
+?>
 
-<nav class="navbar">
-<a href="dashboard.php">Dashboard</a>
-<a href="admin_package.php">Packages</a>
-<a href="#">Bookings</a>
-</nav>
-<div id="menu-btn" class="fas fa-bars"></div>
-<div class="icons"> 
-<!-- logout btn -->
-<a href="../home.php" id="login-btn"> <i class="fas fa-user"></i></a>
-</div>
-</div>
-</section>
-
-    <div class="container">
-        <div class="content">
-            <h3>hi,<span>admin</span></h3>
-            <h1>welcome </span></h1>  
-        </div>
+    <div class="box-container">
+        <div class="box">   
+        
+    <div class="heading-title">
+        
+    <h3>hi,admin</h3>
+            <h3>welcome</h3>
+    </div>
+    </div>
     </div>
  <script>
 document.getElementById("login-btn").addEventListener("click",function(event){
