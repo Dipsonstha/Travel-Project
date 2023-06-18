@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 $email= $_POST['email'];
 $password =md5($_POST['password']);
 ECHO $email;
@@ -11,6 +11,8 @@ $result = mysqli_query($conn,$SQL);
 $count = 0;
 if($result->num_rows > 0 )
 {
+    $_SESSION['email']=$email;
+    
     // while($row = $result->FETCH_ASSOC())
     // {
     //     if($email == $row['email'] && $password == $row['password'] )

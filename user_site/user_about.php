@@ -87,7 +87,7 @@ if (isset($_POST['send'])) {
 <!-- about section ends   -->
 <!-- Foter section   starts -->
   <?php 
-  include '../footer.php';
+  include 'footer.php';
   ?>
     <!-- Footer section ends -->
     

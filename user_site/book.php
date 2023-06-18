@@ -60,15 +60,11 @@
         <input type="number" placeholder="enter number of people" name="guests">
     </div>
     
-    <div class="inputBox">
-        <span>Arrivals :</span>
-        <input type="date" name="arrivals">
+        <div class="inputBox">
+        <span>Total Cost  :</span>
+        <input type="text"  value="<?php  $a = 1 ;$b = 2; $result = $a*$b; echo $result;  ?>" name="">
     </div>
-
-    <div class="inputBox">
-        <span>leaving :</span>
-        <input type="date" name="leaving">
-    </div>
+    
 </div>
 <input type="submit" value="submit" class="btn" name="send">
 </form>
@@ -77,7 +73,7 @@
 <!-- Foter section   starts -->
  
     <?php
-    include '../footer.php';
+    include 'footer.php';
     ?>
 
        <!-- Footer section ends -->

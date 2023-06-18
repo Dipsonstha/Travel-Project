@@ -149,7 +149,7 @@ if(isset($_SESSION['user_name'])){
 <!-- Home package section ends -->
 <!-- Footer section   starts -->
 <?php
-include '../footer.php';
+include 'footer.php';
 ?>
 <!-- Footer section ends -->
 
