@@ -14,11 +14,10 @@ if (isset($_POST['send'])) {
     $address = $_POST['address'];
     $location = $_POST['location'];
     $guests = $_POST['guests'];
-    $arrivals = $_POST['arrivals'];
-    $leaving = $_POST['leaving'];
+    $cost = $_POST['totalCost']; // Updated: Retrieve the total cost value
 
     // Perform form validation
-    if (!empty($name) && !empty($email) && !empty($phone) && !empty($address) && !empty($location) && !empty($guests) && !empty($arrivals) && !empty($leaving)) {
+    if (!empty($name) && !empty($email) && !empty($phone) && !empty($address) && !empty($location) && !empty($guests) && !empty($cost)) {
         // All required fields have a value, proceed with database insertion
 
         // Escape special characters to prevent SQL injection
@@ -28,8 +27,7 @@ if (isset($_POST['send'])) {
         $address = mysqli_real_escape_string($connection, $address);
         $location = mysqli_real_escape_string($connection, $location);
         $guests = mysqli_real_escape_string($connection, $guests);
-        $arrivals = mysqli_real_escape_string($connection, $arrivals);
-        $leaving = mysqli_real_escape_string($connection, $leaving);
+        $cost = mysqli_real_escape_string($connection, $cost);
 
         // Check if a user with the same email and phone number has already booked
         $existingQuery = "SELECT * FROM book_form WHERE email = '$email' AND phone = '$phone'";
@@ -41,14 +39,14 @@ if (isset($_POST['send'])) {
         }
 
         // Create the SQL query
-        $request = "INSERT INTO book_form (name, email, phone, address, location, guests, arrivals, leaving) 
-                    VALUES ('$name', '$email', '$phone', '$address', '$location', '$guests', '$arrivals', '$leaving')";
+        $request = "INSERT INTO book_form (name, email, phone, address, location, guests, cost) 
+                    VALUES ('$name', '$email', '$phone', '$address', '$location', '$guests', '$cost')";
 
         // Execute the query
         mysqli_query($connection, $request);
 
         // Set the form submitted flag in session
-        $_SESSION['submitted'] = true;
+        $_SESSION['form_submitted'] = true;
 
         // Show success message
         echo 'Form successfully booked!';
@@ -62,4 +60,3 @@ if (isset($_POST['send'])) {
     }
 }
 ?>
-

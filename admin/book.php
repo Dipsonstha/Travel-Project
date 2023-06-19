@@ -35,13 +35,9 @@
         <th>Email</th>
         <th>Phone</th>
         <th>Address</th>
+        <th>Destinaton</th>
         <th>Number of people</th>
-        <th>Package Name</th>
-        <th>Package Type</th>
-        <th>Cost</th>
-        <th>Duration</th>
-        <th>Start Date</th>
-        <th>End Date</th>
+        <th>Total Cost</th>
         </tr>
         <tbody>
         </tbody>

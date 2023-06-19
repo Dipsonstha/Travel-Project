@@ -1,35 +1,5 @@
 <?php
-session_start();
-$error = array(); // Initialize the error array
-// print_r($_SESSION);
-
-if (isset($_POST['send'])) {
-    include '../config.php';
-
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = md5($_POST['password']);
-
-    $select = "SELECT * FROM signup_form WHERE email = '$email'";
-    $result = mysqli_query($conn, $select);
-
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_array($result);
-        if ($row['password'] == $password) {
-            if ($row['user_type'] == 'admin') {
-                $_SESSION['admin_name'] = $row['name'];
-                header('Location: dashboard.php');
-                exit;
-            } elseif ($row['user_type'] == 'user') {
-                header('Location: user_dashboard.php');
-                exit;
-            }
-        } else {
-            $error[] = 'Incorrect password!';
-        }
-    } else {
-        $error[] = 'Incorrect email or password!';
-    }
-}
+include '../redirect.php';
 ?>
 
 <!DOCTYPE html>
@@ -73,15 +43,17 @@ if (isset($_POST['send'])) {
             while ($row = mysqli_fetch_assoc($result)) {
                 $imageData = base64_encode($row['image']);
                 echo '<div class="box">
-                        <div class="image"><img src="data:image/jpeg;base64,' . $imageData . '" alt=""></div>
-                        <div class="content">
-                            <h3>' . $row["PackageName"] . '</h3>
-                            <p>' . $row["PackageType"] . '</p>
-                            <p class="tour-details">Cost: NRS ' . $row["cost"] . ' per person | Duration: ' . $row["duration"] . ' days | Start: ' . $row["startDate"] . ' | End: ' . $row["endDate"] . '</p>
-                            <a href="book.php?packageid=' . $row["id"] . '" class="btn">Book Now</a>
-                        </div>
-                    </div>';
+                <div class="image"><img src="data:image/jpeg;base64,' . $imageData . '" alt=""></div>
+                <div class="content">
+                    <h3>' . $row["PackageName"] . '</h3>
+                    <p>' . $row["PackageType"] . '</p>
+                    <p class="tour-details">Cost: NRS ' . $row["cost"] . ' per person | Duration: ' . $row["duration"] . ' days | Start: ' . $row["startDate"] . ' | End: ' . $row["endDate"] . '</p>
+                    <a href="book.php?location=' . urlencode($row['PackageName']) . '&cost=' . $row['cost'] . '" class="btn">Book Now</a>
+                </div>
+            </div>';
+        
             }
+            
             ?>
         </div>
     </section>

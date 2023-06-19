@@ -52,46 +52,65 @@
     </div>
     <div class="inputBox">
         <span>where to  :</span>
-        <input type="text" placeholder="enter your destination" name="location">
+        <input type="text" placeholder="enter your destination" name="location" value="<?php echo isset($_GET['location']) ? urldecode($_GET['location']) : ''; ?>">
+
     </div>
 
-        <div class="inputBox">
+    <div class="inputBox">
         <span>How many  :</span>
         <input type="number" placeholder="enter number of people" name="guests">
     </div>
     
-        <div class="inputBox">
-        <span>Total Cost  :</span>
-        <input type="text"  value="<?php  $a = 1 ;$b = 2; $result = $a*$b; echo $result;  ?>" name="">
-    </div>
-    
+<!-- Calculate total cost and display it -->
+<div class="inputBox">
+    <span>Total Cost:</span>
+    <?php
+    if (isset($_GET['cost'])) {
+        $cost = $_GET['cost'];
+        echo '<input type="text" value="" name="totalCost" id="totalCost" readonly>';
+    }
+    ?>
+</div>
 </div>
 <input type="submit" value="submit" class="btn" name="send">
 </form>
 </section>
 <!-- Booking section ends   -->
-<!-- Foter section   starts -->
+<!-- Footer section starts -->
  
     <?php
     include 'footer.php';
     ?>
 
-       <!-- Footer section ends -->
-    
-    <!-- Swiper Js Link -->
-    
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    
-    <!-- Custom Js Link -->
-    
-    <script src="../js/script.js"></script>
-    <script>
-        let bookingForm = document.getElementById("booking-form");
-        bookingForm.guests.addEventListener("change",function(){
-            if(bookingForm.guests.value < 0){
+<!-- Footer section ends -->
+
+<!-- Swiper Js Link -->
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- Custom Js Link -->
+
+<script src="../js/script.js"></script>
+<script>
+  let bookingForm = document.getElementById("booking-form");
+        bookingForm.guests.addEventListener("change", function() {
+            if (bookingForm.guests.value < 0) {
                 bookingForm.guests.value = 0;
             }
-        })
-    </script>
-    </body>
-    </html>
+        });
+
+        let totalCostInput = document.getElementById("totalCost");
+        let costPerPerson = <?php echo isset($_GET['cost']) ? $_GET['cost'] : 0; ?>;
+
+        bookingForm.guests.addEventListener("input", function() {
+            let guests = parseInt(bookingForm.guests.value);
+            if (guests < 0) {
+                guests = 0;
+            }
+            let totalCost = guests * costPerPerson;
+            totalCostInput.value = totalCost.toFixed(2);
+        });
+</script>
+
+</body>
+</html>
