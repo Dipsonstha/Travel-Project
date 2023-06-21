@@ -136,14 +136,18 @@ if (isset($_POST['send'])) {
                 </div>
                 <!-- Calculate total cost and display it -->
                 <div class="inputBox">
-                    <span>Total Cost:</span>
-                    <?php
-                    if (isset($_GET['cost'])) {
-                        $cost = $_GET['cost'];
-                        echo '<input type="text" value="' . $cost . '" name="totalCost" id="totalCost" readonly>';
-                    }
-                    ?>
+                 <span>Total Cost:</span>
+                 <?php
+                 if (isset($_GET['cost'])) {
+                     $cost = $_GET['cost'];
+                     echo '<input type="text" value="' . $cost . '" name="totalCost" id="totalCost" readonly>';
+                 } else {
+                     $cost = isset($_POST['totalCost']) ? $_POST['totalCost'] : "";
+                     echo '<input type="text" value="' . $cost . '" name="totalCost" id="totalCost" readonly>';
+                 }
+                 ?>
                 </div>
+
             </div>
             <input type="submit" value="Submit" class="btn" name="send">
         </form>
