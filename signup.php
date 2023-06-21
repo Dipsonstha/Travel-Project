@@ -28,7 +28,7 @@ if (isset($_POST['send'])) {
              $_SESSION['email'] = $email;
  
 
-            header('Location:/user_site/book.php');
+            header('Location:home.php');
             exit;
         }
     }

@@ -47,9 +47,24 @@ include '../redirect.php';
                 <div class="content">
                     <h3>' . $row["PackageName"] . '</h3>
                     <p>' . $row["PackageType"] . '</p>
-                    <p class="tour-details">Cost: NRS ' . $row["cost"] . ' per person | Duration: ' . $row["duration"] . ' days | Start: ' . $row["startDate"] . ' | End: ' . $row["endDate"] . '</p>
-                    <a href="book.php?location=' . urlencode($row['PackageName']) . '&cost=' . $row['cost'] . '" class="btn">Book Now</a>
-                </div>
+                    <p class="tour-details">Cost: NRS ' . $row["cost"] . ' per person | Duration: ' . $row["duration"] . ' days | Start: ' . $row["startDate"] . ' | End: ' . $row["endDate"] . '</p>';
+
+            // Get the current date
+            $currentDate = date("Y-m-d");
+
+            // Calculate the maximum booking date
+            $maxBookingDate = date('Y-m-d', strtotime('+2 days', strtotime($row["startDate"])));
+
+            // Compare the current date with the maximum booking date
+            if ($currentDate < $maxBookingDate) {
+                // Booking is allowed
+                echo '<a href="book.php?location=' . urlencode($row['PackageName']) . '&cost=' . $row['cost'] . '" class="btn">Book Now</a>';
+            } else {
+                // Booking is not allowed
+                echo '<p class="error-message">Booking for this package is closed. Please select another package.</p>';
+            }
+
+            echo '</div>
             </div>';
         
             }

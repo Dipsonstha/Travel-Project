@@ -21,25 +21,24 @@
     <section class="booking">
 
 <h1 class="heading-title">My package Booking!</h1>
-
-<a href="create.php" class="btn" role="button">Add packages</a>
 <br>
 <table class="table">
     <thead> 
-        <tr>
+    <tr>
         <th>ID</th>
-        <th>Package Name</th>
-        <th>Package Type</th>
-        <th>Cost</th>
-        <th>Duration</th>
-        <th>Start Date</th>
-        <th>End Date</th>
+        <th>Customers Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Destinaton</th>
+        <th>Number of people</th>
+        <th>Total Cost</th>
         </tr>
         <tbody>
             <?php
             include "../config.php";
             //read all row from database table;
-            $sql = "SELECT * FROM `package`";
+            $sql = "SELECT * FROM `book_form`";
             $result = $conn->query($sql);
             $idnum=1;
             if(!$result){
@@ -51,12 +50,13 @@
                 echo" 
                 <tr>
               <td>$idnum</td>
-              <td>$row[PackageName]</td>
-              <td>$row[PackageType]</td>
+              <td>$row[name]</td>
+              <td>$row[email]</td>
+              <td>$row[phone]</td>
+              <td>$row[address]</td>
+              <td>$row[location]</td>
+              <td>$row[guests]</td>
               <td>$row[cost]</td>
-              <td>$row[duration]</td>
-              <td>$row[startDate]</td>
-              <td>$row[endDate]</td>
               <td>
               <a href='update.php?id=$row[id]' class='btn'>Edit</a>
               <a href='delete.php?id=$row[id]' class='btn'>Delete</a>

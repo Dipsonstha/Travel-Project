@@ -40,6 +40,39 @@
         <th>Total Cost</th>
         </tr>
         <tbody>
+        <?php
+            include "../config.php";
+            //read all row from database table;
+            $sql = "SELECT * FROM `book_form`";
+            $result = $conn->query($sql);
+            $idnum=1;
+            if(!$result){
+            die("Invalid Query: " . $conn->error);
+            }
+
+            //read each data from row
+            while($row = $result->fetch_assoc()){
+                echo" 
+                <tr>
+              <td>$idnum</td>
+              <td>$row[name]</td>
+              <td>$row[email]</td>
+              <td>$row[phone]</td>
+              <td>$row[address]</td>
+              <td>$row[location]</td>
+              <td>$row[guests]</td>
+              <td>$row[cost]</td>
+              <td>
+              <a href='update.php?id=$row[id]' class='btn'>Edit</a>
+              <a href='delete.php?id=$row[id]' class='btn'>Delete</a>
+              </td>
+              </tr>
+              ";
+              $idnum++;
+            }
+
+
+            ?> 
         </tbody>
 
     </thead>

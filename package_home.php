@@ -62,7 +62,7 @@
     <!-- Package section ends -->
 
     <section class="package_description">
-        <h2 class="heading-title">Package Description</h2>
+        <h1 class="heading-title">Package Description</h1>
         <h3>Inclusive</h3>
         <ul>
             <li>Accommodation in hotel/homestay.</li>

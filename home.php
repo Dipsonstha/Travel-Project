@@ -111,18 +111,18 @@
                 <div class="content">
                     <h3>Mardi</h3>
                     <p>The Himalaya</p>
-                    <p>One of the most popular Trekking destinations in Nepal with the spectactular views of himalayas</p>
+                    <p>Mardi Himal: A mesmerizing trekking experience in Nepal's Annapurna region, showcasing breathtaking mountain vistas and serene natural beauty.</p>
                 </div>
                 </div>
 
             <div class="box">
             <div class="image">
-                <img src="image/package2.jpg" alt="">
+                <img src="image/package7.jpg" alt="">
                 </div>
                 <div class="content">
-                    <h3>Adventure & Tour</h3>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <a href="#" class="btn">Book</a>
+                    <h3>Manang</h3>
+                <p> Majestic & Magnificent</p>
+                <p>Manang: A captivating village in Nepal's Annapurna region, where majestic mountain views and rich Tibetan culture converge, creating a remarkable destination for trekkers and adventure enthusiasts.</p>
                 </div>
             </div>
 
@@ -131,9 +131,9 @@
                 <img src="image/package3.jpg" alt="">
                 </div>
                 <div class="content">
-                    <h3>Adventure & Tour</h3>
-                <p>Lorem ipsum dolor sit amet.</p>
-                <a href="#" class="btn">Book</a>
+                    <h3>EBC</h3>
+                <p>Worlds Highest Peak</p>
+                <p>Evesest Base Camp: Where boundless exploration and remarkable discoveries converge in a breathtaking haven.</p>
                 </div>
                 </div>
         </div>
