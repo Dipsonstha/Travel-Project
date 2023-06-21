@@ -87,21 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </head>
 <body>
-<section class="header">
-    <div class="flex">
-    <a href="dashboard.php" class="logo"> <span> Admin Panel </span></a>
-    <nav class="navbar">
-        <a href="dashboard.php">Dashboard</a>
-        <a href="admin_package.php">Packages</a>
-        <a href="#">Bookings</a>
-    </nav>
-    <div id="menu-btn" class="fas fa-bars"></div>
-    <div class="icons"> 
-    <!-- logout btn -->
-    <a href="../home.php"> <i class="fas fa-user" id="login-btn"></i></a>
-    </div>
-    </div>
-</section>
+    <?php
+    include 'header.php';   
+    ?>
 
 <div class="add-products">
     <h1 class="heading-title">Add New Packages</h1>

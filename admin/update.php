@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Package</title>
+    <title>Update Package</title>
     
     <!-- Swiper Css link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"> 
@@ -86,24 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <section class="header">
-        <div class="flex">
-            <a href="dashboard.php" class="logo"> <span> Admin Panel </span></a>
-            <nav class="navbar">
-                <a href="dashboard.php">Dashboard</a>
-                <a href="admin_package.php">Packages</a>
-                <a href="#">Bookings</a>
-            </nav>
-            <div id="menu-btn" class="fas fa-bars"></div>
-            <div class="icons"> 
-                <!-- logout btn -->
-                <a href="../home.php"> <i class="fas fa-user" id="login-btn"></i></a>
-            </div>
-        </div>
-    </section>
-
+    <?php
+    include 'header.php';   
+    ?>
     <div class="add-products">
-        <h1 class="heading-title">Add New Package</h1>
+        <h1 class="heading-title">Update Package</h1>
         <?php if (!empty($errorMessage)): ?>
         <div class="error-message"><?php echo $errorMessage; ?></div>
     <?php endif; ?>
@@ -161,5 +148,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Custom Js Link -->
     <script src="../js/script.js"></script>
+    <script>
+    let packageForm = document.querySelector("form");
+    packageForm.addEventListener("input", updateEndDate);
+
+    function updateEndDate() {
+        let startDate = new Date(packageForm.startDate.value);
+        let duration = parseInt(packageForm.duration.value);
+
+        if (!isNaN(startDate.getTime()) && !isNaN(duration)) {
+            let endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + duration);
+
+            if (!isNaN(endDate.getTime())) {
+                packageForm.endDate.value = formatDate(endDate);
+            }
+        }
+    }
+
+    function formatDate(date) {
+        let year = date.getFullYear();
+        let month = String(date.getMonth() + 1).padStart(2, "0");
+        let day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    }
+</script>
+
 </body>
 </html>
