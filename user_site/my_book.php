@@ -30,7 +30,7 @@
     <thead> 
     <tr>
         <th>ID</th>
-        <th>Customers Name</th>
+        <th>Name</th>
         <th>Email</th>
         <th>Phone</th>
         <th>Address</th>
