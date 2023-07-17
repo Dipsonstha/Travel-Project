@@ -1,5 +1,17 @@
 <?php
-include '../redirect.php';
+include '../config.php'; // Update the path to the config.php file
+
+// Fetch all packages from the database
+$sql = "SELECT * FROM package";
+$result = mysqli_query($conn, $sql);
+
+// Create an empty array to store package details
+$packages = array();
+
+while ($row = mysqli_fetch_assoc($result)) {
+    // Add the package details to the $packages array
+    $packages[] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,41 +47,40 @@ include '../redirect.php';
             Top destinations
         </h1>
         <div class="box-container">
-            <?php
-            include("../config.php");
-            $sql = "SELECT * FROM package";
-            $result = mysqli_query($conn, $sql);
+            <?php foreach ($packages as $package): ?>
+                <div class="box">
+                    <a href="package_details.php?package_id=<?php echo $package['id']; ?>">
+                        <div class="image">
+                            <?php
+                            $imageData = base64_encode($package['image']);
+                            echo '<img src="data:image/jpeg;base64,' . $imageData . '" alt="">';
+                            ?>
+                        </div>
+                        <div class="content">
+                            <h3><?php echo $package["PackageName"]; ?></h3>
+                            <p><?php echo $package["PackageType"]; ?></p>
+                            <p class="tour-details">Cost: NRS <?php echo $package["cost"]; ?> per person | Duration: <?php echo $package["duration"]; ?> days | Start: <?php echo $package["startDate"]; ?> | End: <?php echo $package["endDate"]; ?></p>
 
-            while ($row = mysqli_fetch_assoc($result)) {
-                $imageData = base64_encode($row['image']);
-                echo '<div class="box">
-                <div class="image"><img src="data:image/jpeg;base64,' . $imageData . '" alt=""></div>
-                <div class="content">
-                    <h3>' . $row["PackageName"] . '</h3>
-                    <p>' . $row["PackageType"] . '</p>
-                    <p class="tour-details">Cost: NRS ' . $row["cost"] . ' per person | Duration: ' . $row["duration"] . ' days | Start: ' . $row["startDate"] . ' | End: ' . $row["endDate"] . '</p>';
+                            <?php
+                            // Get the current date
+                            $currentDate = date("Y-m-d");
 
-            // Get the current date
-            $currentDate = date("Y-m-d");
+                            // Calculate the maximum booking date
+                            $maxBookingDate = date('Y-m-d', strtotime('+2 days', strtotime($package["startDate"])));
 
-            // Calculate the maximum booking date
-            $maxBookingDate = date('Y-m-d', strtotime('+2 days', strtotime($row["startDate"])));
-
-            // Compare the current date with the maximum booking date
-            if ($currentDate < $maxBookingDate) {
-                // Booking is allowed
-                echo '<a href="book.php?location=' . urlencode($row['PackageName']) . '&cost=' . $row['cost'] . '" class="btn">Book Now</a>';
-            } else {
-                // Booking is not allowed
-                echo '<p class="error-message">Booking for this package is closed. Please select another package.</p>';
-            }
-
-            echo '</div>
-            </div>';
-        
-            }
-            
-            ?>
+                            // Compare the current date with the maximum booking date
+                            if ($currentDate < $maxBookingDate) {
+                                // Booking is allowed
+                                echo '<a href="book.php?location=' . urlencode($package['PackageName']) . '&cost=' . $package['cost'] . '" class="btn">Book Now</a>';
+                            } else {
+                                // Booking is not allowed
+                                echo '<p class="error-message">Booking for this package is closed. Please select another package.</p>';
+                            }
+                            ?>
+                        </div>
+                    </a>
+                </div>
+            <?php endforeach; ?>
         </div>
     </section>
     <!-- Package section ends -->

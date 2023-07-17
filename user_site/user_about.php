@@ -1,6 +1,6 @@
-<?php
+<!-- <?php
 include 'redirect.php';
-?>
+?> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
