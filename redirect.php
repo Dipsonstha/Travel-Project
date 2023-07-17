@@ -19,6 +19,8 @@ if (isset($_POST['send'])) {
                 header('Location: admin/dashboard.php');
                 exit;
             } elseif ($row['user_type'] == 'user') {
+                $_SESSION['user_name'] = $email;
+                $_SESSION['id']= $row['id'];
                 header('Location: user_site/user_dashboard.php');
                 exit;
             }

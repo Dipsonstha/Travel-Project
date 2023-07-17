@@ -15,12 +15,16 @@
 <body>
       <!-- Header Section starts -->
       <?php
+      //session start
+      session_start();
+      $user_name=$_SESSION['user_name'];
+      $id = $_SESSION['id'];
     include 'header.php';
     ?>
     <!-- Header section Ends -->
     <section class="booking">
 
-<h1 class="heading-title">My package Booking!</h1>
+<h1 class="heading-title">My package Booking!<?php  echo $id .$user_name ?> </h1>
 <br>
 <table class="table">
     <thead> 
@@ -38,7 +42,8 @@
             <?php
             include "../config.php";
             //read all row from database table;
-            $sql = "SELECT * FROM `book_form`";
+
+            $sql = "SELECT * FROM `book_form` where  id= $id";
             $result = $conn->query($sql);
             $idnum=1;
             if(!$result){

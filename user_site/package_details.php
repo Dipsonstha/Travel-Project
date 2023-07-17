@@ -1,6 +1,6 @@
 <?php
 include '../config.php'; // Update the path to the config.php file
-
+session_start();
 // Retrieve the package ID from the query parameter
 $id = $_GET['package_id'];
 

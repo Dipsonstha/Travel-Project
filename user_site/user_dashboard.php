@@ -2,10 +2,11 @@
 include '../config.php';
 
 session_start();
-
-if(isset($_SESSION['user_name'])){
+$user_name=$_SESSION['user_name'];
+if(!isset($_SESSION['user_name'])){
     header('location:home.php');
 }
+
 ?>
 
 <!DOCTYPE html>

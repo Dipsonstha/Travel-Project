@@ -1,6 +1,6 @@
 <?php
 include '../config.php'; // Update the path to the config.php file
-
+session_start();
 // Fetch all packages from the database
 $sql = "SELECT * FROM package";
 $result = mysqli_query($conn, $sql);
