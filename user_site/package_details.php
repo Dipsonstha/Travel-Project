@@ -23,7 +23,13 @@ $packageName = $row['PackageName'];
 $itinerarySql = "SELECT * FROM itinerary";
 $itineraryResult = mysqli_query($conn, $itinerarySql);
 $itineraryRow = mysqli_fetch_assoc($itineraryResult);
-$itinerary = $itineraryRow['description'];
+
+if ($itineraryRow) {
+    $itinerary = $itineraryRow['description'];
+} else {
+    $itinerary = 'No itinerary found.';
+}
+
 ?>
 
 <!DOCTYPE html>
