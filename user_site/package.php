@@ -1,6 +1,12 @@
 <?php
 include '../config.php'; // Update the path to the config.php file
 session_start();
+$user_name=$_SESSION['user_name'];
+if(!isset($_SESSION['user_name'])){
+    header('location:../home.php');
+}
+else{
+
 // Fetch all packages from the database
 $sql = "SELECT * FROM package";
 $result = mysqli_query($conn, $sql);
@@ -134,3 +140,6 @@ while ($row = mysqli_fetch_assoc($result)) {
     </script>
 </body>
 </html>
+<?php
+}
+?>

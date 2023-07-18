@@ -4,9 +4,9 @@ include '../config.php';
 session_start();
 $user_name=$_SESSION['user_name'];
 if(!isset($_SESSION['user_name'])){
-    header('location:home.php');
+    header('location:../home.php');
 }
-
+else{
 ?>
 
 <!DOCTYPE html>
@@ -163,3 +163,6 @@ include 'footer.php';
 
 </body>
 </html>
+<?php
+}
+?>

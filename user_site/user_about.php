@@ -1,6 +1,12 @@
 <!-- <?php
 include 'redirect.php';
 session_start();
+$user_name=$_SESSION['user_name'];
+if(!isset($_SESSION['user_name'])){
+    header('location:../home.php');
+}
+else{
+?>
 ?> -->
 <!DOCTYPE html>
 <html lang="en">
@@ -73,3 +79,6 @@ session_start();
     
     </body>
     </html>
+    <?php 
+}
+?>

@@ -17,6 +17,12 @@
       <?php
       //session start
       session_start();
+$user_name=$_SESSION['user_name'];
+if(!isset($_SESSION['user_name'])){
+    header('location:../home.php');
+}
+else{
+
       $user_name=$_SESSION['user_name'];
       $id = $_SESSION['id'];
     include 'header.php';
@@ -96,3 +102,6 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 </body>
 </html>
+<?php
+}
+?>

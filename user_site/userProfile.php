@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+$user_name=$_SESSION['user_name'];
+if(!isset($_SESSION['user_name'])){
+    header('location:../home.php');
+}
+else{
+
 $user_name= $_SESSION['user_name'];
 $id = $_SESSION['id'];
 $conn = mysqli_connect("localhost","root","","book_db");
@@ -140,3 +147,6 @@ table {
   <div id="siteAds">Interested</div>
   <!-- <footer id="pageFooter">Footer</footer> -->
 </body>
+<?php
+}
+?>

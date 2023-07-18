@@ -28,7 +28,7 @@ if (isset($_SESSION['user_name'])) {
     <div id="menu-btn" class="fas fa-bars"></div>
     <div class="icons"> 
         <!-- <i class="fas fa-search" id="search-btn"></i> -->
-        <a href="../home.php"> <i class="fas fa-sign-out-alt" class="btn"></i></a>
+        <a href="../unsetvariable.php?unset=true"> <i class="fas fa-sign-out-alt" class="btn"></i></a>
         <i  class="fas fa-user" id="login-btn"></i>
     </div>
 </section>
