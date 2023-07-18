@@ -116,11 +116,15 @@ color: var(--main-color);
     font-size: 2.5rem;
     cursor: pointer;
     color: var(--black);
+    padding: 10px;
 }
 
 .header .icons i:hover{
     color: var(--main-color);
 }
+/* .btn{
+    border: 2px soli var(--main-color);
+} */
 /* 
 .login-form-container{
     position: fixed;
