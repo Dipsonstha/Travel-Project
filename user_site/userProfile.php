@@ -69,12 +69,64 @@ background-color: #EEEDED;
 .smallSize{
     font-size:18px;
 }
+table {
+    border-collapse: collapse;
+    /* Other styles for the table */
+  }
+  td, th {
+    padding: 5px;
+    /* Other styles for table cells */
+  }
 </style>
 <body>
   <header id="pageHeader"><h1>User Profile </h1></header>
   <article id="mainArticle">
     <h2>Previous History</h2>
     <hr>
+    <table border="1px solid black" >
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Destinaton</th>
+        <th>Number of people</th>
+        <th>Total Cost</th>
+        <th>View</th>
+        </tr>
+        <?php
+            include "../config.php";
+            //read all row from database table;
+
+            $sql = "SELECT * FROM `book_form` where  user_id= $id";
+            $result = $conn->query($sql);
+            $idnum=1;
+            if(!$result){
+            die("Invalid Query: " . $conn->error);
+            }
+            while($rows = $result->fetch_assoc()){
+              echo" 
+              <tr>
+            <td>$idnum</td>
+            <td>$rows[name]</td>
+            <td>$rows[email]</td>
+            <td>$rows[phone]</td>
+            <td>$rows[address]</td>
+            <td>$rows[location]</td>
+            <td>$rows[guests]</td>
+            <td>$rows[cost]</td>
+            <td>
+            <a href='my_book.php'  class='btn'>View</a>
+            </td>
+            </tr>
+            ";
+            $idnum++;
+          }
+            ?>
+    </table>
+    
+    
  </article>
   <nav id="mainNav">
     <h2>Details</h2>
