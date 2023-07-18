@@ -17,31 +17,74 @@ if (!$conn) {
 
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-
-        }
-        .container{
-            width: 100%;
-            height: 100vh;
-            background-color: blue;
-        }
-    </style>
-</head>
+<!doctype html>
+<title>User Profile</title>
+<style>
+body { 
+  display: grid;
+  grid-template-areas: 
+    "header header header"
+    "nav article ads"
+    "footer footer footer";
+  grid-template-rows: 80px 1fr 70px;  
+  grid-template-columns: 20% 1fr 15%;
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+  height: 100vh;
+  margin: 0;
+  }  
+header, footer, article, nav, div {
+  padding: 1.2em;
+background-color: #EEEDED;
+  }
+#pageHeader {
+  grid-area: header;
+  padding: 5px 20px 50px 30px;
+  }
+#pageFooter {
+  grid-area: footer;
+  }
+#mainArticle { 
+  grid-area: article;      
+  }
+#mainNav { 
+  grid-area: nav; 
+  }
+#siteAds { 
+  grid-area: ads; 
+  } 
+/* Stack the layout on small devices/viewports. */
+@media all and (max-width: 575px) {
+  body { 
+    grid-template-areas: 
+      "header"
+      "article"
+      "ads"
+      "nav"
+      "footer";
+    grid-template-rows: 80px 1fr 70px 1fr 70px;  
+    grid-template-columns: 1fr;
+ }
+}
+.smallSize{
+    font-size:18px;
+}
+</style>
 <body>
-    <div class="container">
-    <?php 
-      echo "<h1>Welcome ".$row["name"]."! </h1>";
-    ?>
-    </div>
-    
+  <header id="pageHeader"><h1>User Profile </h1></header>
+  <article id="mainArticle">
+    <h2>Previous History</h2>
+    <hr>
+ </article>
+  <nav id="mainNav">
+    <h2>Details</h2>
+    <hr>
+    <h3>Name :<span class="smallSize"><?php echo $row['name']; ?></span></h3> 
+    <h3>Email:<span class="smallSize"> <?php echo $row['email']; ?></span></h3>
+    <h3>Password:<span class="smallSize">
+    <h3>User type:<span class="smallSize"><?php echo ucfirst($row['user_type']); ?></span></h3> 
+
+</nav>
+  <div id="siteAds">Interested</div>
+  <!-- <footer id="pageFooter">Footer</footer> -->
 </body>
-</html>
