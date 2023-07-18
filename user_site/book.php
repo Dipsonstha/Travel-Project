@@ -54,9 +54,10 @@ if (isset($_POST['send'])) {
         if (mysqli_num_rows($existingResult) > 0) {
             $errorMessage = 'A user with the same email and phone number has already booked the package. Please try a different phone number and email.';
         } else {
+            $user_id = $_SESSION['id'];
             // Create the SQL query
-            $request = "INSERT INTO book_form (name, email, phone, address, location, guests, cost) 
-                        VALUES ('$name', '$email', '$phone', '$address', '$location', '$guests', '$cost')";
+            $request = "INSERT INTO book_form (name, email, phone, address, location, guests, cost,user_id) 
+                        VALUES ('$name', '$email', '$phone', '$address', '$location', '$guests', '$cost','$user_id')";
 
             // Execute the query
             mysqli_query($connection, $request);
@@ -111,11 +112,11 @@ if (isset($_POST['send'])) {
             <div class="flex">
                 <div class="inputBox">
                     <span>Name:</span>
-                    <input type="text" placeholder="Enter your name" name="name" value="<?php echo $name; ?>">
+                    <input type="text" name="name" value="<?php echo $_SESSION['user_name']; ?>" disabled>
                 </div>
                 <div class="inputBox">
                     <span>Email:</span>
-                    <input type="email" placeholder="Enter your email" name="email" value="<?php echo $email; ?>">
+                    <input type="email" placeholder="Enter your email" name="email" value="<?php echo $_SESSION['user_email']?>" disabled>
                 </div>
                 <div class="inputBox">
                     <span>Phone:</span>
@@ -128,7 +129,7 @@ if (isset($_POST['send'])) {
                 <div class="inputBox">
                     <span>Where to:</span>
                     <input type="text" placeholder="Enter your destination" name="location"
-                        value="<?php echo isset($_GET['location']) ? urldecode($_GET['location']) : ''; ?>">
+                        value="<?php echo isset($_GET['location']) ? urldecode($_GET['location']) : ''; ?>" disabled>
                 </div>
                 <div class="inputBox">
                     <span>How many:</span>
@@ -179,6 +180,27 @@ if (isset($_POST['send'])) {
             let totalCost = guests * costPerPerson;
             totalCostInput.value = totalCost.toFixed(2);
         });
+
+        
+// Select the form element
+var form = document.querySelector("form");
+
+// Function to enable all disabled elements
+function enableDisabledElements() {
+  // Select all elements with the disabled attribute within the form
+  var disabledElements = form.querySelectorAll("[disabled]");
+
+  // Iterate over the disabled elements and remove the disabled attribute
+  disabledElements.forEach(function(element) {
+    element.removeAttribute("disabled");
+  });
+}
+
+// Add an event listener to the form submission
+form.addEventListener("submit", function(event) {
+  enableDisabledElements();
+});
+
     </script>
 </body>
 

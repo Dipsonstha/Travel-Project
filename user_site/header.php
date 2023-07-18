@@ -30,7 +30,7 @@ if (isset($_SESSION['user_name'])) {
     <div class="icons"> 
         <!-- <i class="fas fa-search" id="search-btn"></i> -->
         <a href="../home.php"> <i class="fas fa-sign-out-alt" class="btn"></i></a>
-        <i  class="fas fa-user" id="login-btn"><?php echo isset($user_name) ? $user_name : ''; ?></i>
+        <i  class="fas fa-user" id="login-btn"></i>
     </div>
 </section>
 <script>

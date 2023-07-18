@@ -20,6 +20,7 @@ if (isset($_POST['send'])) {
                 exit;
             } elseif ($row['user_type'] == 'user') {
                 $_SESSION['user_name'] = $row['name']; // Fetch the 'name' column from the query result
+                $_SESSION['user_email'] = $row['email'];
                 $_SESSION['id'] = $row['id'];
                 header('Location: user_site/user_dashboard.php');
                 exit;
