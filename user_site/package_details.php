@@ -1,6 +1,8 @@
+<!-- package-details.php -->
 <?php
 include '../config.php'; // Update the path to the config.php file
 session_start();
+
 // Retrieve the package ID from the query parameter
 $id = $_GET['package_id'];
 
@@ -19,16 +21,10 @@ if (!$row) {
 $packageName = $row['PackageName'];
 // Retrieve other package details as needed
 
-// Fetch the itinerary from the database
-$itinerarySql = "SELECT * FROM itinerary";
+// Fetch the itinerary from the database for the specific package
+$itinerarySql = "SELECT * FROM itinerary WHERE package_id = $id ORDER BY day_number ASC";
 $itineraryResult = mysqli_query($conn, $itinerarySql);
-$itineraryRow = mysqli_fetch_assoc($itineraryResult);
-
-if ($itineraryRow) {
-    $itinerary = $itineraryRow['description'];
-} else {
-    $itinerary = 'No itinerary found.';
-}
+$itineraryRows = mysqli_fetch_all($itineraryResult, MYSQLI_ASSOC);
 
 ?>
 
@@ -61,10 +57,16 @@ if ($itineraryRow) {
 
     <!-- Display the package details -->
     <section class="package-details">
-        <h2 class="heading-title">Itinerary</h2>
-        <div class="itinerary">
-            <?php echo $itinerary; ?>
-        </div>
+         <h2 class="heading-title">Itinerary</h2>
+        <?php if ($itineraryRows): ?>
+            <ul>
+                <?php foreach ($itineraryRows as $row): ?>
+                    <li>Day-<?php echo "{$row['day_number']}: {$row['activity_description']}"; ?><li><?php echo "{$row['additional_details']}" ;?></li> </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php else: ?>
+            <p>No itinerary found for this package.</p>
+        <?php endif; ?>
     </section>
 
     <!-- Footer section starts -->

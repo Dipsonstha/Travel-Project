@@ -386,6 +386,56 @@ section{
   background-color: #f2dede;
   color: #a94442;
 }
+/*  */
+.add-itinerary form{
+   max-width: 70rem;
+   margin: 0 auto;   
+   background-color: var(--white);
+   box-shadow: var(--box-shadow);
+   border:var(--border);
+   border-radius: .5rem;
+   padding:2rem;
+}
+
+.add-itinerary form .flex{
+   display: flex;
+   gap:1.5rem;
+   flex-wrap: wrap;
+}
+
+.add-itinerary form .flex .inputBox{
+   flex:1 1 25rem;
+} 
+.add-itinerary form .flex .inputBox input{
+   width: 100%;
+    padding: 1.2rem 1.4rem;
+    font-size: 1.6rem;
+    color: var(--light-black);
+    text-transform: none;
+    margin-top: 1.5rem;
+    border: var(--border);
+}
+.add-itinerary form span{
+   font-size:1.7rem;
+   color:var(--light-color);
+}
+
+.add-itinerary form .box{
+   font-size: 1.8rem;
+   background-color: var(--light-bg);
+   border-radius: .5rem;
+   padding:1.4rem;
+   width: 100%;
+   margin-top: 1.5rem;
+}
+
+.add-itinerary form textarea{
+   height: 5.4rem;
+   resize: none;
+   border: var(--border);
+    width: 345px;
+}
+
 .table {
    width: 100%;
    border-collapse: collapse;

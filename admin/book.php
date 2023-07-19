@@ -63,7 +63,6 @@
               <td>$row[guests]</td>
               <td>$row[cost]</td>
               <td>
-              <a href='update_book.php?id=$row[id]' class='btn'>Edit</a>
               <a href='delete_book.php?id=$row[id]' class='btn'>Delete</a>
               </td>
               </tr>

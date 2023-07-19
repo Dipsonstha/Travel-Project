@@ -635,7 +635,16 @@ text-align: center;
     font-size: 1.5rem;
   }
   
-  
+  /*  */
+  .package-details .heading-title{
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 6rem;
+    text-transform: uppercase;
+    color: var(--black);
+
+}
+
 .booking .heading-title{
     text-align: center;
     margin-bottom: 3rem;
@@ -696,6 +705,77 @@ flex:1 1 41rem;
 .booking .booking-form .btn{
 margin-top: 2rem;
 }
+/*  */
+.contact .heading-title{
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 6rem;
+    text-transform: uppercase;
+    color: var(--black);
+
+}
+.contact .success-message {
+    background-color: #dff0d8;
+    color: #3c763d;
+    font-size: 3rem;
+  }
+  
+  .contact .error-message {
+    background-color: #f2dede;
+    color: #a94442;
+    font-size: 3rem;
+  }
+.contact .contact-form{
+    padding: 2rem;
+    background: var(--light-bg);    
+}
+
+.contact .contact-form .flex{
+display: flex;
+flex-wrap: wrap;
+gap: 2rem;
+}
+
+.contact .contact-form .flex .inputBox{
+flex:1 1 41rem;
+}
+
+.contact .contact-form .flex .inputBox input{
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    font-size: 1.6rem;
+    color: var(--light-black);
+    text-transform: none;
+    margin-top: 1.5rem;
+    border: var(--border);
+}
+.contact .contact-form .flex .inputBox textarea{
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    font-size: 1.6rem;
+    color: var(--light-black);
+    text-transform: none;
+    margin-top: 1.5rem;
+    border: var(--border);
+}
+
+.contact .contact-form .flex .inputBox input:focus{
+    background: var(--black);
+    color: var(--white);
+}
+
+.contact .contact-form .flex .inputBox input::placeholder{
+    color: var(--light-black);
+}
+
+.contact .contact-form .flex .inputBox span{
+    font-size: 1.5rem;
+    color: var(--light-black);
+}
+.contact .contact-form .btn{
+margin-top: 2rem;
+}
+
 
 .container .row .inputBox label{
     font-size: 1.5rem;
@@ -871,3 +951,4 @@ ul > li > a {
     margin-bottom: 10px;
     
 }
+

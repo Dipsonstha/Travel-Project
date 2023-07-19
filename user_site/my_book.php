@@ -90,9 +90,6 @@ else{
 
 
 
-
-
-
     <!-- Footer Section Starts -->
     <?php
     include 'footer.php';

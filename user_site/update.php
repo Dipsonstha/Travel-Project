@@ -27,7 +27,6 @@ if (isset($_POST['send'])) {
     $address = $_POST['address'];
     $location = $_POST['location'];
     $guests = $_POST['guests'];
-    $cost = $_POST['totalCost'];
 
     // Check if the cost value is present in the form input
     if (empty($cost) && isset($_GET['cost'])) {
@@ -35,17 +34,13 @@ if (isset($_POST['send'])) {
     }
 
     // Perform form validation
-    if (!empty($name) && !empty($email) && !empty($phone) && !empty($address) && !empty($location) && !empty($guests) && !empty($cost)) {
-        // All required fields have a value, proceed with database insertion
+    if (!empty($phone) && !empty($address) && !empty($guests)) {
+        // All required fields have a value, proceed with database update
 
         // Escape special characters to prevent SQL injection
-        $name = mysqli_real_escape_string($connection, $name);
-        $email = mysqli_real_escape_string($connection, $email);
         $phone = mysqli_real_escape_string($connection, $phone);
         $address = mysqli_real_escape_string($connection, $address);
-        $location = mysqli_real_escape_string($connection, $location);
         $guests = mysqli_real_escape_string($connection, $guests);
-        $cost = mysqli_real_escape_string($connection, $cost);
 
         // Check if a user with the same email and phone number has already booked
         $existingQuery = "SELECT * FROM book_form WHERE email = '$email' AND phone = '$phone'";
@@ -82,7 +77,7 @@ if (isset($_POST['send'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Form</title>
+    <title>Update Booking</title>
     <!-- Swiper Css link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
 
@@ -97,11 +92,11 @@ if (isset($_POST['send'])) {
     <!-- Header Section starts -->
     <?php include 'header.php'; ?>
     <div class="heading" style="background:url(../image/slider3.jpg) no-repeat">
-        <h1>Book</h1>
+        <h1>Update Booking</h1>
     </div>
     <!-- Booking section starts -->
     <section class="booking">
-        <h1 class="heading-title">Book your Trip!</h1>
+        <h1 class="heading-title">Update your Booking</h1>
         <?php if (!empty($errorMessage)) { ?>
             <div class="error-message"><?php echo $errorMessage; ?></div>
         <?php } ?>
@@ -129,7 +124,7 @@ if (isset($_POST['send'])) {
                 <div class="inputBox">
                     <span>Where to:</span>
                     <input type="text" placeholder="Enter your destination" name="location"
-                        value="<?php echo isset($_GET['location']) ? urldecode($_GET['location']) : ''; ?>" disabled>
+                        value="<?php echo isset($_GET['location']) ? urldecode($_GET['location']) : ''; ?>" >
                 </div>
                 <div class="inputBox">
                     <span>How many:</span>
@@ -150,7 +145,7 @@ if (isset($_POST['send'])) {
                 </div>
 
             </div>
-            <input type="submit" value="Submit" class="btn" name="send">
+            <input type="submit" value="Update" class="btn" name="send">
         </form>
     </section>
     <!-- Booking section ends -->

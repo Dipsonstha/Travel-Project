@@ -140,7 +140,7 @@ table {
     <hr>
     <h3>Name :<span class="smallSize"><?php echo $row['name']; ?></span></h3> 
     <h3>Email:<span class="smallSize"> <?php echo $row['email']; ?></span></h3>
-    <h3>Password:<span class="smallSize">
+    <!-- <h3>Password:<span class="smallSize"> -->
     <h3>User type:<span class="smallSize"><?php echo ucfirst($row['user_type']); ?></span></h3> 
 
 </nav>

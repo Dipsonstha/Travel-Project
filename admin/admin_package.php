@@ -64,6 +64,7 @@ include 'header.php';
               <td>
               <a href='update.php?id=$row[id]' class='btn'>Edit</a>
               <a href='delete.php?id=$row[id]' class='btn'>Delete</a>
+              <a href='itinerary.php?package_id=$row[id]' class='btn'>Manage Itinerary</a>
               </td>
               </tr>
               ";
