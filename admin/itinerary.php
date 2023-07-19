@@ -59,10 +59,6 @@
             <span>Activity Description :</span>
             <textarea name="activity_description" id="activity_description" required></textarea>
             </div>
-            <div class="inputBox">
-            <span>Additional details :</span>
-            <textarea name="activity_description" id="activity_description" required></textarea>
-            </div>
             </div>
 
          <button type="submit" class="btn">Add New Entry</button>

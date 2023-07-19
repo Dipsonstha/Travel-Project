@@ -611,11 +611,12 @@ text-align: center;
     background-color: #f8f8f8;
   }
   
-  .package_description h1.heading-title {
-    font-size: 6rem;
-    font-weight: bold;
-    margin-bottom: 20px;
+  .package_description .heading-title {
     text-align: center;
+    margin-bottom: 3rem;
+    font-size: 6rem;
+    text-transform: uppercase;
+    color: var(--black);
   }
   
   .package_description h3 {
@@ -643,6 +644,30 @@ text-align: center;
     text-transform: uppercase;
     color: var(--black);
 
+}
+.package-details ul > li{
+    text-transform:none;
+    font-size: 20px;
+    text-align:none;
+    list-style: none;
+    line-height: 50px;
+}
+
+/*  */
+.payment-details .heading-title{
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 4rem;
+    text-transform: uppercase;
+    color: var(--black);
+
+}
+.payment-details p{
+    font-size: 1.7rem;
+    color: var(--light-black);
+    padding: 20px;
+    border: 1px solid #eaeaea;
+    background-color: #fafafa;
 }
 
 .booking .heading-title{
@@ -930,25 +955,5 @@ ul > li > a {
     font-size: 14px;
     font-weight: bold;
 }
-.payment-details {
-    margin-top: 20px;
-    
-}
 
-.payment-details p {
-    margin-bottom: 10px;
-    font-size: 10px;
-}
-
-.payment-details ul {
-    list-style-type: disc;
-    margin-left: 20px;
-    margin-bottom: 10px;
-    font-size: 10px;
-}
-
-.payment-details li {
-    margin-bottom: 10px;
-    
-}
 

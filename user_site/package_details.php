@@ -57,17 +57,32 @@ $itineraryRows = mysqli_fetch_all($itineraryResult, MYSQLI_ASSOC);
 
     <!-- Display the package details -->
     <section class="package-details">
-         <h2 class="heading-title">Itinerary</h2>
+         <h2 class="heading-title">Itinerary of <?php echo $packageName ?></h2>
         <?php if ($itineraryRows): ?>
             <ul>
                 <?php foreach ($itineraryRows as $row): ?>
-                    <li>Day-<?php echo "{$row['day_number']}: {$row['activity_description']}"; ?><li><?php echo "{$row['additional_details']}" ;?></li> </li>
+                    <li><strong>Day-<?php echo "{$row['day_number']}: </strong>{$row['activity_description']}"; ?></li>
                 <?php endforeach; ?>
             </ul>
         <?php else: ?>
             <p>No itinerary found for this package.</p>
         <?php endif; ?>
     </section>
+      <!-- Payment details section -->
+      <section class="payment-details">
+        <h2 class="heading-title">Payment Details</h2>
+        <!-- Add your payment details here, such as payment methods, prices, etc. -->
+        <!-- For example: -->
+        <p><strong>Pay by Bank Wire Transfer or with Major Credit Cards</strong></p>
+        <p><strong>&nbsp;Pay Via Secured&nbsp;Credit card Link:&nbsp;<a href="#">CLICK HERE</a></strong><br>
+<em>* Note: 5% Bank charge will be additional as a international transaction fee.</em></p>
+        <p><strong>&nbsp;By cash</strong><br>
+Traveler can also deposit the initial amount in cash from his/her friends, relative and anyone who is in Nepal.&nbsp;</p>
+        <p><strong>&nbsp;By online</strong><br>
+Traveler can also deposit the initial amount via online from mobile banking servicers like esewa, FonePay & khalti to id <strong>9861589917</strong>,A/C Holders Name: Travel Nepal &nbsp;</p>
+<p><strong><em>Note:</em></strong><strong>&nbsp;</strong>Sending deposit slip copy or Transaction ID is mandatory to our finance department by email at:&nbsp;<strong>finance@travel.com or&nbsp;</strong>contact us at +1-123-456-7890&nbsp;</p>    
+</section>
+
 
     <!-- Footer section starts -->
     <?php
