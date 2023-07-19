@@ -5,6 +5,7 @@
 <nav class="navbar">
 <a href="home.php">home</a>
 <a href="about.php">About</a>
+<a href="contact.php">contact Us</a>
 <a href="package_home.php">Package</a>
 </nav>
 <div id="menu-btn" class="fas fa-bars"></div>

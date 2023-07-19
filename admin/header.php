@@ -24,6 +24,7 @@ if (isset($_SESSION['admin_name'])) {
         <a href="dashboard.php">Dashboard</a>
         <a href="admin_package.php">Packages</a>
         <a href="book.php">Bookings</a>
+        <a href="contact.php">Contacts</a>
     </nav>
     
     <div id="menu-btn" class="fas fa-bars"></div>
