@@ -3,49 +3,45 @@ $errorMessage = "";
 $successMessage = "";
 
 // Check if the form has been submitted
-if (isset($_POST['send'])) {
-    // Retrieve form data
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
-    $message = $_POST['comment'];
+// if (isset($_POST['send'])) {
+// // Retrieve form data
+$name = isset($_POST['name']) ? $_POST['name'] : '';
+$email = isset($_POST['email']) ? $_POST['email'] : '';
+$phone = isset($_POST['phone']) ? $_POST['phone'] : '';
+$address = isset($_POST['address']) ? $_POST['address'] : '';
+$message = isset($_POST['comment']) ? $_POST['comment'] : '';
 
-    // Include the database connection file
-    include 'config.php';
 
-    // Perform form validation (you can add more validation if needed)
-    if (!empty($name) && !empty($email) && !empty($phone) && !empty($address) && !empty($message)) {
-        // All required fields have a value, proceed with database insertion
+  // Include the database connection file
+include 'config.php';
 
-        // Escape special characters to prevent SQL injection
-        $name = mysqli_real_escape_string($conn, $name);
-        $email = mysqli_real_escape_string($conn, $email);
-        $phone = mysqli_real_escape_string($conn, $phone);
-        $address = mysqli_real_escape_string($conn, $address);
-        $message = mysqli_real_escape_string($conn, $message);
+// Perform form validation (you can add more validation if needed)
+if (!empty($name) && !empty($email) && !empty($phone) && !empty($address) && !empty($message)) {
+    // All required fields have a value, proceed with database insertion
 
-        // Create the SQL query to insert data into the contact table
-        $sql = "INSERT INTO contact (name, email, phone, address, message) VALUES ('$name', '$email', '$phone', '$address', '$message')";
+    // Create a prepared statement
+    $stmt = mysqli_prepare($conn, "INSERT INTO contact (name, email, phone, address, message) VALUES (?, ?, ?, ?, ?)");
 
-        // Execute the query
-        if (mysqli_query($conn, $sql)) {
-            // Data successfully inserted
-            $successMessage = "Your form has been submitted, we'll contact you soon";
-            // You can also redirect the user to a success page if desired
-            // header("Location: success_page.php");
-            // exit;
-        } else {
-            // Error in query execution
-            echo "Error: " . mysqli_error($conn);
-        }
+    // Bind the parameters to the prepared statement
+    mysqli_stmt_bind_param($stmt, "sssss", $name, $email, $phone, $address, $message);
 
-        // Close the database connection
-        mysqli_close($conn);
+    // Execute the prepared statement
+    if (mysqli_stmt_execute($stmt)) {
+        // Data successfully inserted
+        $successMessage = "Your form has been submitted, we'll contact you soon";
     } else {
-        // Some required fields are empty, display an error message
-        $errorMessage = "Please fill in all required fields.";
+        // Error in query execution
+        echo "Error: " . mysqli_error($conn);
     }
+
+    // Close the statement
+    mysqli_stmt_close($stmt);
+
+    // Close the database connection
+    mysqli_close($conn);
+} else {
+    // Some required fields are empty, display an error message
+    $errorMessage = "Please fill in all required fields.";
 }
 ?>
 <!DOCTYPE html>
@@ -69,6 +65,10 @@ if (isset($_POST['send'])) {
 <body>
     <!-- Header Section starts -->
     <?php include 'header.php'; ?>
+    <!-- login form container -->
+<?php
+ include 'login.php';
+?>
     <div class="heading" style="background:url(../image/slider3.jpg) no-repeat">
         <h1>Contact Us</h1>
     </div>
