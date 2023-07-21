@@ -23,7 +23,7 @@
     ?>
     <section class="booking">
 
-<h1 class="heading-title">Package Bookings </h1>
+<h1 class="heading-title">User Contacts</h1>
 
 <!-- <a href="create.php" class="btn" role="button">Add packages</a> -->
 <br>

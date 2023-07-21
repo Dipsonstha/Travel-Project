@@ -18,7 +18,7 @@ if (isset($_SESSION['admin_name'])) {
 ?>
 <section class="header">
 <div class="flex">
-    <a href="home.php" class="logo"><span> Admin Panel </span></a>
+    <a href="dashboard.php" class="logo"><span> Admin Panel </span></a>
     
     <nav class="navbar">
         <a href="dashboard.php">Dashboard</a>

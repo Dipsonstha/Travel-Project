@@ -9,15 +9,26 @@ $_SESSION['form_submitted'] = false;
 $errorMessage = "";
 $successMessage = "";
 
+if(isset($_GET["location"])){
+    $location_det = $_GET["location"];
+   }
+   else{
+      ?>
+    <script>
+        window.location="package.php";
+    </script>
+      <?php
+   }
+
 // Check if the user is logged in and retrieve their information
-if (isset($_SESSION['user'])) {
-    $user = $_SESSION['user'];
-    $name = $user['name'];
-    $email = $user['email'];
-} else {
-    $name = isset($_POST['name']) ? $_POST['name'] : "";
-    $email = isset($_POST['email']) ? $_POST['email'] : "";
-}
+// if (isset($_SESSION['user'])) {
+//     $user = $_SESSION['user'];
+//     $name = $user['name'];
+//     $email = $user['email'];
+// } else {
+//     $name = isset($_POST['name']) ? $_POST['name'] : "";
+//     $email = isset($_POST['email']) ? $_POST['email'] : "";
+// }
 
 if (isset($_POST['send'])) {
     // Retrieve form data
@@ -28,14 +39,16 @@ if (isset($_POST['send'])) {
     $location = $_POST['location'];
     $guests = $_POST['guests'];
     $cost = $_POST['totalCost'];
+    $payment = $_FILES["payment"]; // Get the name of the uploaded file
 
     // Check if the cost value is present in the form input
-    if (empty($cost) && isset($_GET['cost'])) {
-        $cost = $_GET['cost'];
-    }
+    // if (empty($cost) && isset($_GET['cost'])) {
+    //     $cost = $_GET['cost'];
+    // }
 
     // Perform form validation
-    if (!empty($name) && !empty($email) && !empty($phone) && !empty($address) && !empty($location) && !empty($guests) && !empty($cost)) {
+    if (!empty($name) && !empty($email) && !empty($location)) 
+    {
         // All required fields have a value, proceed with database insertion
 
         // Escape special characters to prevent SQL injection
@@ -46,21 +59,38 @@ if (isset($_POST['send'])) {
         $location = mysqli_real_escape_string($connection, $location);
         $guests = mysqli_real_escape_string($connection, $guests);
         $cost = mysqli_real_escape_string($connection, $cost);
+        $payment = mysqli_real_escape_string($connection, $payment);
 
         // Check if a user with the same email and phone number has already booked
-        $existingQuery = "SELECT * FROM book_form WHERE email = '$email' AND phone = '$phone'";
+        $user_email= $_SESSION['user_email'];
+        $existingQuery = "SELECT * FROM book_form WHERE email = '$user_email' AND location = '$location'";
         $existingResult = mysqli_query($connection, $existingQuery);
 
         if (mysqli_num_rows($existingResult) > 0) {
-            // $errorMessage = 'A user with the same email and phone number has already booked the package. Please try a different phone number and email.';
-        } else {
+            $errorMessage = 'A user with the same email and phone number has already booked the package. Please try a different phone number and email.';
+            ?>
+            <script>
+                alert("Cannot enter same location");
+            </script>
+
+            <?php
+        exit(1);
+        } 
+        else 
+        {
             $user_id = $_SESSION['id'];
             // Create the SQL query
-            $request = "INSERT INTO book_form (name, email, phone, address, location, guests, cost,user_id) 
-                        VALUES ('$name', '$email', '$phone', '$address', '$location', '$guests', '$cost','$user_id')";
-
+            $request = "INSERT INTO book_form (name, email, phone, address, location, guests, cost, payment, user_id) 
+                        VALUES ('$name', '$email', '$phone', '$address', '$location', '$guests', '$cost', '$payment', '$user_id')";
             // Execute the query
-            mysqli_query($connection, $request);
+            if(mysqli_query($connection, $request))
+            {
+                ?>
+                <script>
+                    alert("success");
+                </script>
+                <?php
+            }
 
             // Set the form submitted flag in session
             $_SESSION['form_submitted'] = true;
@@ -99,9 +129,18 @@ if (isset($_POST['send'])) {
     <div class="heading" style="background:url(../image/slider3.jpg) no-repeat">
         <h1>Book</h1>
     </div>
+    <!-- fetch data from database -->
+    <?php
+     
+    $sql_fetch_data = "SELECT * FROM package WHERE PackageName = '$location_det'";
+    $result_fetch_data = mysqli_query($connection,$sql_fetch_data);
+    $row_fetch_data = $result_fetch_data->fetch_assoc();
+    
+    
+    ?>  
     <!-- Booking section starts -->
     <section class="booking">
-        <h1 class="heading-title">Book your Trip!</h1>
+        <h1 class="heading-title">Book your Trip! <?php  echo $_GET["location"] ?></h1>
         <?php if (!empty($errorMessage)) { ?>
             <div class="error-message"><?php echo $errorMessage; ?></div>
         <?php } ?>
@@ -129,7 +168,7 @@ if (isset($_POST['send'])) {
                 <div class="inputBox">
                     <span>Where to:</span>
                     <input type="text" placeholder="Enter your destination" name="location"
-                        value="<?php echo isset($_GET['location']) ? urldecode($_GET['location']) : ''; ?>" disabled>
+                        value="<?php  echo $row_fetch_data['PackageName']?>" disabled>
                 </div>
                 <div class="inputBox">
                     <span>How many:</span>
@@ -139,8 +178,8 @@ if (isset($_POST['send'])) {
                 <div class="inputBox">
                  <span>Total Cost:</span>
                  <?php
-                 if (isset($_GET['cost'])) {
-                     $cost = $_GET['cost'];
+                 if (isset($row_fetch_data['cost'])) {
+                     $cost = $row_fetch_data['cost'];
                      echo '<input type="text" value="' . $cost . '" name="totalCost" id="totalCost" readonly>';
                  } else {
                      $cost = isset($_POST['totalCost']) ? $_POST['totalCost'] : "";
@@ -148,12 +187,23 @@ if (isset($_POST['send'])) {
                  }
                  ?>
                 </div>
+                <div class="inputBox">
+                    <span>Payment:</span>
+                    <input type="file" name="payment">
+                </div>
 
             </div>
             <input type="submit" value="Submit" class="btn" name="send">
         </form>
     </section>
     <!-- Booking section ends -->
+      <!-- Payment details section -->
+      <section class="payment-details">
+        <h2 class="heading-title">Payment Details</h2>
+        <!-- Add your payment details here, such as payment methods, prices, etc. -->
+        <!-- For example: -->
+    <img src="../image/esewa.jpg" alt="esewa" width ="250px" height="300px" id="esewa">   
+</section>
     <!-- Footer section starts -->
     <?php include 'footer.php'; ?>
     <!-- Footer section ends -->
@@ -170,7 +220,7 @@ if (isset($_POST['send'])) {
         });
 
         let totalCostInput = document.getElementById("totalCost");
-        let costPerPerson = <?php echo isset($_GET['cost']) ? $_GET['cost'] : 0; ?>;
+        let costPerPerson = <?php echo isset($row_fetch_data['cost']) ? $row_fetch_data['cost'] : 0; ?>;
 
         bookingForm.guests.addEventListener("input", function () {
             let guests = parseInt(bookingForm.guests.value);
@@ -199,6 +249,7 @@ function enableDisabledElements() {
 // Add an event listener to the form submission
 form.addEventListener("submit", function(event) {
   enableDisabledElements();
+  
 });
 
     </script>

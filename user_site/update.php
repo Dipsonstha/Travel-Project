@@ -9,65 +9,9 @@ $_SESSION['form_submitted'] = false;
 $errorMessage = "";
 $successMessage = "";
 
+$id = $_GET['id'];
+
 // Check if the user is logged in and retrieve their information
-if (isset($_SESSION['user'])) {
-    $user = $_SESSION['user'];
-    $name = $user['name'];
-    $email = $user['email'];
-} else {
-    $name = isset($_POST['name']) ? $_POST['name'] : "";
-    $email = isset($_POST['email']) ? $_POST['email'] : "";
-}
-
-if (isset($_POST['send'])) {
-    // Retrieve form data
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
-    $location = $_POST['location'];
-    $guests = $_POST['guests'];
-
-    // Check if the cost value is present in the form input
-    if (empty($cost) && isset($_GET['cost'])) {
-        $cost = $_GET['cost'];
-    }
-
-    // Perform form validation
-    if (!empty($phone) && !empty($address) && !empty($guests)) {
-        // All required fields have a value, proceed with database update
-
-        // Escape special characters to prevent SQL injection
-        $phone = mysqli_real_escape_string($connection, $phone);
-        $address = mysqli_real_escape_string($connection, $address);
-        $guests = mysqli_real_escape_string($connection, $guests);
-
-        // Check if a user with the same email and phone number has already booked
-        $existingQuery = "SELECT * FROM book_form WHERE email = '$email' AND phone = '$phone'";
-        $existingResult = mysqli_query($connection, $existingQuery);
-
-        if (mysqli_num_rows($existingResult) > 0) {
-            // $errorMessage = 'A user with the same email and phone number has already booked the package. Please try a different phone number and email.';
-        } else {
-            $user_id = $_SESSION['id'];
-            // Create the SQL query
-            $request = "INSERT INTO book_form (name, email, phone, address, location, guests, cost,user_id) 
-                        VALUES ('$name', '$email', '$phone', '$address', '$location', '$guests', '$cost','$user_id')";
-
-            // Execute the query
-            mysqli_query($connection, $request);
-
-            // Set the form submitted flag in session
-            $_SESSION['form_submitted'] = true;
-
-            // Show success message
-            $successMessage = 'Package successfully booked!';
-        }
-    } else {
-        // Some required fields are empty, display an error message
-        $errorMessage = 'Please fill in all required fields.';
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -102,7 +46,11 @@ if (isset($_POST['send'])) {
         <?php } ?>
         <?php if (!empty($successMessage)) { ?>
             <div class="success-message"><?php echo $successMessage; ?></div>
-        <?php } ?>
+        <?php } 
+        $sql_update = "SELECT * FROM book_form WHERE id = '$id'";
+        $result_update= mysqli_query($connection,$sql_update);
+        $row_update = $result_update->fetch_assoc();
+        ?>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="booking-form" id="booking-form">
             <div class="flex">
                 <div class="inputBox">
@@ -115,16 +63,26 @@ if (isset($_POST['send'])) {
                 </div>
                 <div class="inputBox">
                     <span>Phone:</span>
-                    <input type="text" placeholder="Enter your number" name="phone" maxlength="10">
+                    <input type="text" placeholder="<?php echo $row_update['phone']  ?>" name="phone" maxlength="10" >
                 </div>
                 <div class="inputBox">
-                    <span>Address:</span>
-                    <input type="text" placeholder="Enter your address" name="address">
+                    <span>Address:</span> 
+                    <input type="text" placeholder="<?php echo $row_update['address']  ?>" name="address">
                 </div>
                 <div class="inputBox">
                     <span>Where to:</span>
-                    <input type="text" placeholder="Enter your destination" name="location"
-                        value="<?php echo isset($_GET['location']) ? urldecode($_GET['location']) : ''; ?>" >
+                    <select name="" id="">
+                        <?php 
+                        $sql_destination = "SELECT * FROM package";
+                        $result_destination = mysqli_query($connection,$sql_destination);
+                        while($row_destination = $result_destination->fetch_assoc() )
+                        {
+                        ?>
+                        <option value="<?php echo $row_destination['PackageName'] ?>"><?php echo $row_destination['PackageName'] ?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
                 </div>
                 <div class="inputBox">
                     <span>How many:</span>

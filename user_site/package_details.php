@@ -68,13 +68,7 @@ $itineraryRows = mysqli_fetch_all($itineraryResult, MYSQLI_ASSOC);
             <p>No itinerary found for this package.</p>
         <?php endif; ?>
     </section>
-      <!-- Payment details section -->
-      <section class="payment-details">
-        <h2 class="heading-title">Payment Details</h2>
-        <!-- Add your payment details here, such as payment methods, prices, etc. -->
-        <!-- For example: -->
-    <img src="../image/esewa.jpg" alt="esewa" width ="250px" height="300px">   
-</section>
+    
 
 
     <!-- Footer section starts -->

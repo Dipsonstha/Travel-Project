@@ -38,6 +38,7 @@
         <th>Destinaton</th>
         <th>Number of people</th>
         <th>Total Cost</th>
+        <th>Payment proof</th>
         </tr>
         <tbody>
         <?php
@@ -62,6 +63,7 @@
               <td>$row[location]</td>
               <td>$row[guests]</td>
               <td>$row[cost]</td>
+              <td>$row[payment]</td>
               <td>
               <a href='delete_book.php?id=$row[id]' class='btn'>Delete</a>
               </td>
@@ -81,5 +83,6 @@
  <!-- Custom Js Link -->
 
  <script  src="../js/admin_script.js"></script>
+ 
 </body>
 </html>

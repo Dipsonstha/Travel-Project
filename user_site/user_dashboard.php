@@ -112,7 +112,7 @@ else{
     <div class="box-container">
         <div class="box">
             <div class="image">
-                <img src="image/package1.jpg" alt="">
+                <img src="../image/package1.jpg" alt="">
                 </div>
                 <div class="content">
                     <h3>Mardi</h3>
@@ -123,7 +123,7 @@ else{
 
             <div class="box">
             <div class="image">
-                <img src="image/package7.jpg" alt="">
+                <img src="../image/package7.jpg" alt="">
                 </div>
                 <div class="content">
                     <h3>Manang</h3>
@@ -134,7 +134,7 @@ else{
 
             <div class="box">
             <div class="image">
-                <img src="image/package3.jpg" alt="">
+                <img src="../image/package3.jpg" alt="">
                 </div>
                 <div class="content">
                     <h3>EBC</h3>

@@ -14,11 +14,11 @@
             <div class="box">
                 <h3>Extra Links</h3>
                 
-                <a href="#"> <i class="fas fa-angle-right"></i>Ask Question</a>
-                <a href="#"> <i class="fas fa-angle-right"></i>About Us</a>
-                <a href="#"><i class="fas fa-angle-right"></i>Privacy Policy</a>
+                <a href="user_contact.php"> <i class="fas fa-angle-right"></i>Ask Question</a>
+                <a href="user_about.php"> <i class="fas fa-angle-right"></i>About Us</a>
+                <!-- <a href="#"><i class="fas fa-angle-right"></i>Privacy Policy</a>
                 <a href="#"><i class="fas fa-angle-right"></i>Terms of Use</a>
-     
+      -->
      
             </div>
     
@@ -31,7 +31,7 @@
                 <a href="#"><i class="fas fa-map"></i>kathmandu-13, Nepal</a>
      
             </div>
-    
+<!--     
             <div class="box">
                 <h3>Follow Us</h3>
                 <a href="#"> <i class="fab fa-facebook-f"></i>facebook</a>
@@ -39,6 +39,6 @@
                 <a href="#"><i class="fab fa-twitter"></i>twitter</a>
                 <a href="#"><i class="fab fa-linkedin"></i>linkedin</a>
      
-            </div>
+            </div> -->
     </div>
         </section>

@@ -1,4 +1,7 @@
 <?php
+include 'redirect.php';
+?>
+<?php
 $errorMessage = "";
 $successMessage = "";
 

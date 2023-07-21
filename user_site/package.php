@@ -53,7 +53,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <div class="image">
                             <?php
                             $imageData = base64_encode($package['image']);
-                            echo '<img src="data:image/jpeg;base64,' . $imageData . '" alt="">';
+                            echo '<img src="data:image/jpg;base64,' . $imageData . '" alt="">';
                             ?>
                         </div>
                         <div class="content">
