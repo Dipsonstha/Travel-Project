@@ -82,6 +82,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                 </div>
             <?php endforeach; ?>
         </div>
+        <div id="load-more" class="btn" onclick="loadMorePackages()">Load more</div>
     </section>
     <!-- Package section ends -->
 
@@ -115,22 +116,34 @@ while ($row = mysqli_fetch_assoc($result)) {
     <script src="../js/script.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
-        var swiper = new Swiper(".box-container", {
-            effect: "coverflow",
-            grabCursor: true,
-            centeredSlides: true,
-            slidesPerView: "auto",
-            coverflowEffect: {
-                rotate: 0,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: true,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-            },
-        });
-    </script>
+    // var swiper = new Swiper(".box-container", {
+    //     // ... (swiper configuration remains the same)
+    // });
+
+    let boxes = document.querySelectorAll('.packages .box-container .box');
+    let visiblePackages = 3; // Number of initially visible packages
+
+    function loadMorePackages() {
+        const totalPackages = boxes.length;
+
+        for (let i = visiblePackages; i < visiblePackages + 3; i++) {
+            if (boxes[i]) {
+                boxes[i].style.display = 'block';
+            }
+        }
+        visiblePackages += 3;
+
+        // Hide the "Load more" button if all packages are shown
+        if (visiblePackages >= totalPackages) {
+            document.getElementById('load-more').style.display = 'none';
+        }
+    }
+
+    // Initially hide packages except the first three
+    for (let i = visiblePackages; i < boxes.length; i++) {
+        boxes[i].style.display = 'none';
+    }
+</script>
+
 </body>
 </html>
