@@ -67,6 +67,7 @@ $itineraryRows = mysqli_fetch_all($itineraryResult, MYSQLI_ASSOC);
         <?php else: ?>
             <p>No itinerary found for this package.</p>
         <?php endif; ?>
+        <a href="package.php" class="btn">Back</a>
     </section>
     
 

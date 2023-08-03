@@ -202,7 +202,12 @@ if (isset($_POST['send'])) {
         <h2 class="heading-title">Payment Details</h2>
         <!-- Add your payment details here, such as payment methods, prices, etc. -->
         <!-- For example: -->
-    <img src="../image/esewa.jpg" alt="esewa" width ="250px" height="300px" id="esewa">   
+        <div class="image-container">
+    <img src="../image/esewa.jpg" alt="esewa" class="responsive-image"id="esewa">   
+    <img src="../image/" alt="fonepay" class="responsive-image"id="fonepay">   
+    <img src="../image/" alt="khalti" class="responsive-image"id="khalti">   
+    <img src="../image/" alt="connectips" class="responsive-image"id="khalti">   
+    </div>
 </section>
     <!-- Footer section starts -->
     <?php include 'footer.php'; ?>

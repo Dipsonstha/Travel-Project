@@ -954,3 +954,13 @@ ul > li > a {
 }
 
 
+.image-container {
+    display: flex;
+    justify-content: space-between; /* Added to evenly distribute images */
+  }
+  
+  .image-container img {
+    height: 300px;
+    max-width: calc(100% / 3 - 30px); /* Calculate max-width for each image with a 30px gap */
+    margin-right: 30px; /* Added margin between images */
+  }
