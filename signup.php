@@ -84,7 +84,7 @@ if (isset($_POST['send'])) {
                 required><span class="formerror" id="error3"></span>
             <select name="user_type" id="">
                 <option value="user">user</option>
-                <option value="admin">admin</option>
+                <!-- <option value="admin">admin</option> -->
             </select>
             <input type="submit" class="btn" value="signup now" name="send" id="submit-btn">
         </form>

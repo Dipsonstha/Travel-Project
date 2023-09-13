@@ -9,28 +9,16 @@ $_SESSION['form_submitted'] = false;
 $errorMessage = "";
 $successMessage = "";
 
+$location_det = ""; // Default value
+
 if(isset($_GET["location"])){
     $location_det = $_GET["location"];
-   }
-   else{
-      ?>
-    <script>
-        window.location="package.php";
-    </script>
-      <?php
-   }
+} else {
+    header("Location: package.php"); // Redirect if location is not set
+    exit();
+}
 
-// Check if the user is logged in and retrieve their information
-// if (isset($_SESSION['user'])) {
-//     $user = $_SESSION['user'];
-//     $name = $user['name'];
-//     $email = $user['email'];
-// } else {
-//     $name = isset($_POST['name']) ? $_POST['name'] : "";
-//     $email = isset($_POST['email']) ? $_POST['email'] : "";
-// }
-
-if (isset($_POST['send'])) {
+if (isset($_POST['send'])) { // Check for form submission
     // Retrieve form data
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -39,71 +27,81 @@ if (isset($_POST['send'])) {
     $location = $_POST['location'];
     $guests = $_POST['guests'];
     $cost = $_POST['totalCost'];
-    $payment = $_FILES["payment"]; // Get the name of the uploaded file
-
-    // Check if the cost value is present in the form input
-    // if (empty($cost) && isset($_GET['cost'])) {
-    //     $cost = $_GET['cost'];
-    // }
-
+    
     // Perform form validation
-    if (!empty($name) && !empty($email) && !empty($location)) 
-    {
-        // All required fields have a value, proceed with database insertion
+    $validationErrors = [];
 
-        // Escape special characters to prevent SQL injection
-        $name = mysqli_real_escape_string($connection, $name);
-        $email = mysqli_real_escape_string($connection, $email);
-        $phone = mysqli_real_escape_string($connection, $phone);
-        $address = mysqli_real_escape_string($connection, $address);
-        $location = mysqli_real_escape_string($connection, $location);
-        $guests = mysqli_real_escape_string($connection, $guests);
-        $cost = mysqli_real_escape_string($connection, $cost);
-        $payment = mysqli_real_escape_string($connection, $payment);
+    if (empty($name)) {
+        $validationErrors[] = "Name field is required.";
+    }
 
-        // Check if a user with the same email and phone number has already booked
-        $user_email= $_SESSION['user_email'];
-        $existingQuery = "SELECT * FROM book_form WHERE email = '$user_email' AND location = '$location'";
-        $existingResult = mysqli_query($connection, $existingQuery);
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $validationErrors[] = "Valid email address is required.";
+    }
 
-        if (mysqli_num_rows($existingResult) > 0) {
-            $errorMessage = 'A user with the same email and phone number has already booked the package. Please try a different phone number and email.';
-            ?>
-            <script>
-                alert("Cannot enter same location");
-            </script>
+    if (empty($phone) || !preg_match("/^[0-9]{10}$/", $phone)) {
+        $validationErrors[] = "Valid 10-digit phone number is required.";
+    }
 
-            <?php
-        exit(1);
-        } 
-        else 
-        {
-            $user_id = $_SESSION['id'];
-            // Create the SQL query
-            $request = "INSERT INTO book_form (name, email, phone, address, location, guests, cost, payment, user_id) 
-                        VALUES ('$name', '$email', '$phone', '$address', '$location', '$guests', '$cost', '$payment', '$user_id')";
-            // Execute the query
-            if(mysqli_query($connection, $request))
-            {
-                ?>
-                <script>
-                    alert("success");
-                </script>
-                <?php
-            }
+    if (empty($address)) {
+        $validationErrors[] = "Address field is required.";
+    }
 
+    if (empty($location)) {
+        $validationErrors[] = "Location field is required.";
+    }
+
+    if (!is_numeric($guests) || $guests < 0) {
+        $validationErrors[] = "Number of guests must be a non-negative integer.";
+    }
+
+    // Other validation rules for cost and payment can be added here
+
+   // Retrieve user_id from the session
+$user_id = $_SESSION['id'];
+
+
+// ...
+
+if (empty($validationErrors)) {
+    // No validation errors, proceed with database insertion
+
+    // Use prepared statement to prevent SQL injection
+    $sql_insert = "INSERT INTO book_form (user_id, name, email, phone, address, location, guests, cost) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    // Prepare and bind the statement
+    $stmt = mysqli_prepare($connection, $sql_insert);
+    mysqli_stmt_bind_param($stmt, "issssssd", $user_id, $name, $email, $phone, $address, $location, $guests, $cost);
+
+        // Execute the statement
+        if (mysqli_stmt_execute($stmt)) {
             // Set the form submitted flag in session
             $_SESSION['form_submitted'] = true;
 
             // Show success message
-            $successMessage = 'Package successfully booked!';
+            $successMessage = 'Package successfully booked! Pay after the service';
+        } else {
+            // Show error message
+            $errorMessage = "Error inserting data: " . mysqli_error($connection);
         }
+
+        // Close the statement
+        mysqli_stmt_close($stmt);
     } else {
-        // Some required fields are empty, display an error message
-        $errorMessage = 'Please fill in all required fields.';
+        // Validation errors found, set error message
+        $errorMessage = implode("<br>", $validationErrors);
     }
 }
-?>
+
+// Rest of your code...
+
+// Fetch data from database
+$sql_fetch_data = "SELECT * FROM package WHERE PackageName = '$location_det'";
+$result_fetch_data = mysqli_query($connection, $sql_fetch_data);
+$row_fetch_data = $result_fetch_data->fetch_assoc();
+
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -141,74 +139,54 @@ if (isset($_POST['send'])) {
     <!-- Booking section starts -->
     <section class="booking">
         <h1 class="heading-title">Book your Trip! <?php  echo $_GET["location"] ?></h1>
-        <?php if (!empty($errorMessage)) { ?>
+         <?php if (!empty($errorMessage)) { ?>
             <div class="error-message"><?php echo $errorMessage; ?></div>
         <?php } ?>
         <?php if (!empty($successMessage)) { ?>
             <div class="success-message"><?php echo $successMessage; ?></div>
         <?php } ?>
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="booking-form" id="booking-form">
-            <div class="flex">
-                <div class="inputBox">
-                    <span>Name:</span>
-                    <input type="text" name="name" value="<?php echo $_SESSION['user_name']; ?>" disabled>
-                </div>
-                <div class="inputBox">
-                    <span>Email:</span>
-                    <input type="email" placeholder="Enter your email" name="email" value="<?php echo $_SESSION['user_email']?>" disabled>
-                </div>
-                <div class="inputBox">
-                    <span>Phone:</span>
-                    <input type="text" placeholder="Enter your number" name="phone" maxlength="10">
-                </div>
-                <div class="inputBox">
-                    <span>Address:</span>
-                    <input type="text" placeholder="Enter your address" name="address">
-                </div>
-                <div class="inputBox">
-                    <span>Where to:</span>
-                    <input type="text" placeholder="Enter your destination" name="location"
-                        value="<?php  echo $row_fetch_data['PackageName']?>" disabled>
-                </div>
-                <div class="inputBox">
-                    <span>How many:</span>
-                    <input type="number" placeholder="Enter number of people" name="guests">
-                </div>
-                <!-- Calculate total cost and display it -->
-                <div class="inputBox">
-                 <span>Total Cost:</span>
-                 <?php
-                 if (isset($row_fetch_data['cost'])) {
-                     $cost = $row_fetch_data['cost'];
-                     echo '<input type="text" value="' . $cost . '" name="totalCost" id="totalCost" readonly>';
-                 } else {
-                     $cost = isset($_POST['totalCost']) ? $_POST['totalCost'] : "";
-                     echo '<input type="text" value="' . $cost . '" name="totalCost" id="totalCost" readonly>';
-                 }
-                 ?>
-                </div>
-                <div class="inputBox">
-                    <span>Payment:</span>
-                    <input type="file" name="payment">
-                </div>
-
-            </div>
-            <input type="submit" value="Submit" class="btn" name="send">
-        </form>
-    </section>
-    <!-- Booking section ends -->
-      <!-- Payment details section -->
-      <section class="payment-details">
-        <h2 class="heading-title">Payment Details</h2>
-        <!-- Add your payment details here, such as payment methods, prices, etc. -->
-        <!-- For example: -->
-        <div class="image-container">
-    <img src="../image/esewa.jpg" alt="esewa" class="responsive-image"id="esewa">   
-    <img src="../image/" alt="fonepay" class="responsive-image"id="fonepay">   
-    <img src="../image/" alt="khalti" class="responsive-image"id="khalti">   
-    <img src="../image/" alt="connectips" class="responsive-image"id="khalti">   
+        <form method="post" class="booking-form" id="booking-form">
+    <div class="flex">
+        <div class="inputBox">
+            <span>name :</span>
+            <input type="text" placeholder="enter your name" name="name" value="<?php echo $_SESSION['user_name'] ?>" disabled>
+        </div>
+        <div class="inputBox">
+            <span>email :</span>
+            <input type="email" placeholder="enter your email" name="email" value="<?php echo $_SESSION['user_email']?>" disabled>
+        </div>
+        <div class="inputBox">
+            <span>phone :</span>
+            <input type="text" placeholder="enter your number" name="phone" maxlength="10">
+        </div>
+        <div class="inputBox">
+            <span>address :</span>
+            <input type="text" placeholder="enter your address" name="address">
+        </div>
+        <div class="inputBox">
+            <span>where to :</span>
+            <input type="text" placeholder="enter your destination" name="location" value="<?php echo isset($_GET['location']) ? urldecode($_GET['location']) : ''; ?>" disabled>
+        </div>
+        <div class="inputBox">
+            <span>How many :</span>
+            <input type="number" placeholder="enter number of people" name="guests">
+        </div>
+        <!-- Calculate total cost and display it -->
+        <div class="inputBox">
+            <span>Total Cost:</span>
+            <?php
+            if (isset($_GET['cost'])) {
+                $cost = $_GET['cost'];
+                echo '<input type="text" value="" name="totalCost" id="totalCost" readonly>';
+            }
+            ?>
+        </div>
     </div>
-</section>
+    <input type="submit" value="submit" class="btn" name="send">
+    <a href="package.php" role="button" class="btn">Back</a>
+</form>
+
+
     <!-- Footer section starts -->
     <?php include 'footer.php'; ?>
     <!-- Footer section ends -->
@@ -217,7 +195,7 @@ if (isset($_POST['send'])) {
     <!-- Custom Js Link -->
     <script src="../js/script.js"></script>
     <script>
-        let bookingForm = document.getElementById("booking-form");
+    let bookingForm = document.getElementById("booking-form");
         bookingForm.guests.addEventListener("change", function () {
             if (bookingForm.guests.value < 0) {
                 bookingForm.guests.value = 0;
@@ -256,6 +234,7 @@ form.addEventListener("submit", function(event) {
   enableDisabledElements();
   
 });
+
 
     </script>
 </body>

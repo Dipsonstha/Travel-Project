@@ -25,6 +25,7 @@ if (isset($_SESSION['admin_name'])) {
         <a href="admin_package.php">Packages</a>
         <a href="book.php">Bookings</a>
         <a href="contact.php">Contacts</a>
+        <a href="users.php">Users</a>
     </nav>
     
     <div id="menu-btn" class="fas fa-bars"></div>

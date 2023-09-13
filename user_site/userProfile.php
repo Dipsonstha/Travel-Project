@@ -12,21 +12,23 @@ $id = $_SESSION['id'];
 $conn = mysqli_connect("localhost","root","","book_db");
 if (!$conn) {
     die("Connection failed: ".mysqli_connect_error());
-    }
-    else{
-        $sql = "SELECT * from signup_form WHERE id = $id ";
-        $result = mysqli_query($conn,$sql);
-        if(mysqli_num_rows($result)>0){
+  }
+  else{
+    $sql = "SELECT * from signup_form WHERE id = $id ";
+    $result = mysqli_query($conn,$sql);
+    if(mysqli_num_rows($result)>0){
             $row = $result->fetch_assoc();
           
-        }
+          }
     }
 
-
-?>
+    
+    ?>
 <!doctype html>
-<title>User Profile</title>
-<style>
+<head>
+  <title>User Profile</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
 body { 
   display: grid;
   grid-template-areas: 
@@ -85,6 +87,8 @@ table {
     /* Other styles for table cells */
   }
 </style>
+</head>
+
 <body>
   <header id="pageHeader"><h1>User Profile </h1></header>
   <article id="mainArticle">
@@ -124,7 +128,7 @@ table {
             <td>$rows[guests]</td>
             <td>$rows[cost]</td>
             <td>
-            <a href='my_book.php'  class='btn'>View</a>
+            <a href='my_book.php' class='btn'>  View</a>
             </td>
             </tr>
             ";
@@ -132,7 +136,7 @@ table {
           }
             ?>
     </table>
-    
+<a href="user_dashboard.php" class="btn">Back</a>  
     
  </article>
   <nav id="mainNav">
@@ -141,10 +145,10 @@ table {
     <h3>Name :<span class="smallSize"><?php echo $row['name']; ?></span></h3> 
     <h3>Email:<span class="smallSize"> <?php echo $row['email']; ?></span></h3>
     <!-- <h3>Password:<span class="smallSize"> -->
-    <h3>User type:<span class="smallSize"><?php echo ucfirst($row['user_type']); ?></span></h3> 
+    <!-- <h3>User type:<span class="smallSize"><?php echo ucfirst($row['user_type']); ?></span></h3>  -->
+    <a href='update_profile.php?id=$row[id]' class='btn'>Edit</a>
 
 </nav>
-  <div id="siteAds">Interested</div>
   <!-- <footer id="pageFooter">Footer</footer> -->
 </body>
 <?php

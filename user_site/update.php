@@ -11,7 +11,62 @@ $successMessage = "";
 
 $id = $_GET['id'];
 
-// Check if the user is logged in and retrieve their information
+if (isset($_POST['send'])) { // Check for form submission
+    // Retrieve form data
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+    $guests = $_POST['guests'];
+    $location = $_POST['location'];
+
+    // Perform form validation
+    $validationErrors = [];
+
+    if (empty($phone) || !preg_match("/^[0-9]{10}$/", $phone)) {
+        $validationErrors[] = "Valid 10-digit phone number is required.";
+    }
+
+    if (empty($address)) {
+        $validationErrors[] = "Address field is required.";
+    }
+
+    if (!is_numeric($guests) || $guests < 0) {
+        $validationErrors[] = "Number of guests must be a non-negative integer.";
+    }
+
+    // Other validation rules for location can be added here
+
+    if (empty($validationErrors)) {
+        // No validation errors, proceed with database update
+
+        // Use prepared statement to prevent SQL injection
+        $sql_update = "UPDATE book_form SET phone=?, address=?, guests=?, location=? WHERE id=?";
+
+        // Prepare and bind the statement
+        $stmt = mysqli_prepare($connection, $sql_update);
+        mysqli_stmt_bind_param($stmt, "ssisi", $phone, $address, $guests, $location, $id);
+
+        // Execute the statement
+        if (mysqli_stmt_execute($stmt)) {
+            // Show success message
+            $successMessage = 'Booking details updated successfully!';
+        } else {
+            // Show error message
+            $errorMessage = "Error updating data: " . mysqli_error($connection);
+        }
+
+        // Close the statement
+        mysqli_stmt_close($stmt);
+    } else {
+        // Validation errors found, set error message
+        $errorMessage = implode("<br>", $validationErrors);
+    }
+}
+
+// Fetch data for pre-populating the form
+$sql_fetch_booking = "SELECT * FROM book_form WHERE id = '$id'";
+$result_fetch_booking = mysqli_query($connection, $sql_fetch_booking);
+$row_fetch_booking = $result_fetch_booking->fetch_assoc();
+
 ?>
 
 <!DOCTYPE html>
@@ -46,12 +101,9 @@ $id = $_GET['id'];
         <?php } ?>
         <?php if (!empty($successMessage)) { ?>
             <div class="success-message"><?php echo $successMessage; ?></div>
-        <?php } 
-        $sql_update = "SELECT * FROM book_form WHERE id = '$id'";
-        $result_update= mysqli_query($connection,$sql_update);
-        $row_update = $result_update->fetch_assoc();
-        ?>
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="booking-form" id="booking-form">
+        <?php } ?>
+        <form action="<?php echo $_SERVER['PHP_SELF'] . '?id=' . $id; ?>" method="post" class="booking-form"
+            id="booking-form">
             <div class="flex">
                 <div class="inputBox">
                     <span>Name:</span>
@@ -63,30 +115,28 @@ $id = $_GET['id'];
                 </div>
                 <div class="inputBox">
                     <span>Phone:</span>
-                    <input type="text" placeholder="<?php echo $row_update['phone']  ?>" name="phone" maxlength="10" >
+                    <input type="text" placeholder="<?php echo $row_fetch_booking['phone']  ?>" name="phone" maxlength="10" value="<?php echo $row_fetch_booking['phone']; ?>">
                 </div>
                 <div class="inputBox">
                     <span>Address:</span> 
-                    <input type="text" placeholder="<?php echo $row_update['address']  ?>" name="address">
+                    <input type="text" placeholder="<?php echo $row_fetch_booking['address']  ?>" name="address" value="<?php echo $row_fetch_booking['address']; ?>">
                 </div>
                 <div class="inputBox">
                     <span>Where to:</span>
-                    <select name="" id="">
-                        <?php 
-                        $sql_destination = "SELECT * FROM package";
-                        $result_destination = mysqli_query($connection,$sql_destination);
-                        while($row_destination = $result_destination->fetch_assoc() )
-                        {
-                        ?>
-                        <option value="<?php echo $row_destination['PackageName'] ?>"><?php echo $row_destination['PackageName'] ?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
+                    <select name="location" id="locationSelect">
+                    <?php 
+                    $sql_destination = "SELECT * FROM package";
+                    $result_destination = mysqli_query($connection, $sql_destination);
+                    while($row_destination = $result_destination->fetch_assoc()) {
+                    $selected = ($row_fetch_booking['location'] == $row_destination['PackageName']) ? 'selected' : '';
+                    echo '<option value="' . $row_destination['PackageName'] . '" data-cost="' . $row_destination['Cost'] . '" ' . $selected . '>' . $row_destination['PackageName'] . '</option>';
+                    }
+        ?>
+    </select>
                 </div>
                 <div class="inputBox">
                     <span>How many:</span>
-                    <input type="number" placeholder="Enter number of people" name="guests">
+                    <input type="number" placeholder="Enter number of people" name="guests" value="<?php echo $row_fetch_booking['guests']; ?>">
                 </div>
                 <!-- Calculate total cost and display it -->
                 <div class="inputBox">
@@ -101,9 +151,10 @@ $id = $_GET['id'];
                  }
                  ?>
                 </div>
-
             </div>
             <input type="submit" value="Update" class="btn" name="send">
+            <a href="my_book.php" role="button" class="btn">Back</a>
+
         </form>
     </section>
     <!-- Booking section ends -->
@@ -115,26 +166,35 @@ $id = $_GET['id'];
     <!-- Custom Js Link -->
     <script src="../js/script.js"></script>
     <script>
+       document.addEventListener("DOMContentLoaded", function() {
+        let locationSelect = document.getElementById("locationSelect");
+        let totalCostInput = document.getElementById("totalCost");
         let bookingForm = document.getElementById("booking-form");
-        bookingForm.guests.addEventListener("change", function () {
-            if (bookingForm.guests.value < 0) {
-                bookingForm.guests.value = 0;
-            }
+
+        // Initialize costPerPerson with the initial cost
+        let costPerPerson = parseFloat(locationSelect.options[locationSelect.selectedIndex].getAttribute("data-cost"));
+
+        locationSelect.addEventListener("change", function() {
+            costPerPerson = parseFloat(locationSelect.options[locationSelect.selectedIndex].getAttribute("data-cost"));
+            updateTotalCost();
         });
 
-        let totalCostInput = document.getElementById("totalCost");
-        let costPerPerson = <?php echo isset($_GET['cost']) ? $_GET['cost'] : 0; ?>;
+        bookingForm.guests.addEventListener("input", function() {
+            updateTotalCost();
+        });
 
-        bookingForm.guests.addEventListener("input", function () {
+        function updateTotalCost() {
             let guests = parseInt(bookingForm.guests.value);
-            if (guests < 0) {
+            if (isNaN(guests) || guests < 0) {
                 guests = 0;
             }
-            let totalCost = guests * costPerPerson;
+            
+            let totalCost = costPerPerson * guests;
             totalCostInput.value = totalCost.toFixed(2);
-        });
+        }
 
-        
+        // Rest of your code...
+    });
 // Select the form element
 var form = document.querySelector("form");
 

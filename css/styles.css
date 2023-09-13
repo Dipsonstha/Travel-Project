@@ -706,7 +706,7 @@ flex:1 1 41rem;
     padding: 1.2rem 1.4rem;
     font-size: 1.6rem;
     color: var(--light-black);
-    text-transform: none;
+    text-transform: capitalize;
     margin-top: 1.5rem;
     border: var(--border);
 }

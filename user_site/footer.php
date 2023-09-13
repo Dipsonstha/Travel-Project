@@ -7,7 +7,7 @@
             <a href="user_dashboard.php"> <i class="fas fa-angle-right"></i>home</a>
             <a href="user_about.php"> <i class="fas fa-angle-right"></i>About</a>
             <a href="package.php"><i class="fas fa-angle-right"></i>Package</a>
-            <a href="book.php"><i class="fas fa-angle-right"></i>Book</a>
+       
             
         </div>
     
