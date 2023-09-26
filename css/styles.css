@@ -650,22 +650,6 @@ text-align: center;
     line-height: 50px;
 }
 
-/*  */
-.payment-details .heading-title{
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 4rem;
-    text-transform: uppercase;
-    color: var(--black);
-
-}
-.payment-details p{
-    font-size: 1.7rem;
-    color: var(--light-black);
-    padding: 20px;
-    border: 1px solid #eaeaea;
-    background-color: #fafafa;
-}
 
 .booking .heading-title{
     text-align: center;
@@ -964,3 +948,82 @@ ul > li > a {
     max-width: calc(100% / 3 - 30px); /* Calculate max-width for each image with a 30px gap */
     margin-right: 30px; /* Added margin between images */
   }
+
+  /*Update Profile Css*/
+  .profile-container .heading-title{
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 6rem;
+    text-transform: uppercase;
+    color: var(--black);
+
+}
+
+.profile-container h3{
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: var(--black);
+
+}
+
+.profile-container .smallSize{
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: var(--black);
+
+}
+.profile-container .success-message {
+    background-color: #dff0d8;
+    color: #3c763d;
+    font-size: 3rem;
+  }
+  
+  .profile-container .error-msg {
+    background-color: #f2dede;
+    color: #a94442;
+    font-size: 3rem;
+  }
+  .profile-container .update-form{
+    padding: 2rem;
+    background: var(--light-bg);    
+}
+.profile-container .update-form .flex{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    }
+    
+    .profile-container .update-form .flex .inputBox{
+    flex:1 1 41rem;
+    }
+    
+    .profile-container .update-form .flex .inputBox input{
+        width: 100%;
+        padding: 1.2rem 1.4rem;
+        font-size: 1.6rem;
+        color: var(--light-black);
+        text-transform: capitalize;
+        margin-top: 1.5rem;
+        border: var(--border);
+    }
+    
+    .profile-container .update-form .flex .inputBox input:focus{
+        background: var(--black);
+        color: var(--white);
+    }
+    
+    .profile-container .update-form .flex .inputBox input::placeholder{
+        color: var(--light-black);
+    }
+    
+    .profile-container .update-form .flex .inputBox span{
+        font-size: 1.5rem;
+        color: var(--light-black);
+    }
+    .profile-container .update-form .btn{
+    margin-top: 2rem;
+    }

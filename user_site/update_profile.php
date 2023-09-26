@@ -19,8 +19,8 @@ if (!$conn) {
 if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirmPassword'])) {
     $new_name = $_POST['name'];
     $new_email = $_POST['email'];
-    $new_password = $_POST['password'];
-    $confirm_password = $_POST['confirmPassword'];
+    $new_password = md5($_POST['password']); // Hash the password
+    $confirm_password = md5($_POST['confirmPassword']); // Hash the password
 
     // Validate password and confirm password
     if ($new_password !== $confirm_password) {
@@ -47,9 +47,8 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
                     mysqli_stmt_execute($stmt);
                     mysqli_stmt_close($stmt);
 
-                    // Redirect to profile page after successful update
-                    header("location:userProfile.php");
-                    exit();
+                    // Set success message
+                    $successMessage = 'Profile updated successfully!';
                 } else {
                     $error = "Error in the statement: " . mysqli_error($conn);
                 }
@@ -92,7 +91,7 @@ if ($stmt_fetch_data) {
 </head>
 <body>
     <div class="profile-container"> 
-        <h1 class="heading">User Profile</h1>
+        <h1 class="heading-title">User Info</h1>
         <h3>Name: <span class="smallSize"><?php echo $row_name; ?></span></h3> 
         <h3>Email: <span class="smallSize"><?php echo $row_email; ?></span></h3>
 
@@ -101,15 +100,33 @@ if ($stmt_fetch_data) {
         if (isset($error)) {
             echo '<span class="error-msg">' . $error . '</span>';
         }
-        ?>
 
+        if (isset($successMessage)) {
+            echo '<span class="success-message">' . $successMessage . '</span>';
+        }
+        ?>
         <form action="" method="post" class="update-form">
-            <h1 class="heading">Update Profile</h1>
+            <h1 class="heading-title">Update Profile</h1>
+            <div class="flex">
+            <div class="inputBox">
+            <span>Name : </span>
             <input type="text" name="name" class="box" placeholder="New Name" required>
+            </div>
+            <div class="inputBox">
+                <span>Email :</span>
             <input type="email" name="email" class="box" placeholder="New Email" required>
+            </div>
+            <div class="inputBox">
+                <span>Password :</span>
             <input type="password" name="password" class="box" placeholder="New Password" required>
+            </div>
+            <div class="inputBox">
+                <span>Confirm Password :</span>
             <input type="password" name="confirmPassword" class="box" placeholder="Confirm New Password" required>
+        </div>  
+        </div>
             <input type="submit" class="btn" value="Update Profile" name="update">
+           
             <a href='userProfile.php' class='btn'>Back</a>
         </form>
     </div>
